@@ -65,8 +65,8 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 
 ### Passo 1: Clone o Repositório
 ```bash
-git clone https://github.com/ricardofrugoni/violencia-rio-analise-preditiva.git
-cd violencia-rio-analise-preditiva
+git clone https://github.com/ricardofrugoni/seguranca-rio-analise-preditiva.git
+cd seguranca-rio-analise-preditiva
 ```
 
 ### Passo 2: Crie Ambiente Virtual
@@ -118,7 +118,7 @@ python -c "import streamlit, pandas, tensorflow, xgboost; print('✅ Tudo OK!')"
 ## 📁 Estrutura do Projeto
 
 ```
-violencia-rio-analise-preditiva/
+seguranca-rio-analise-preditiva/
 │
 ├── Home.py                          # 🏠 Página principal do Streamlit
 │
@@ -440,18 +440,18 @@ Contribuições são bem-vindas! Para contribuir:
 5. **Abra** um Pull Request
 
 ### 🐛 Reportar Bugs
-- Use as [GitHub Issues](https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/issues)
+- Use as [GitHub Issues](https://github.com/ricardofrugoni/seguranca-rio-analise-preditiva/issues)
 - Inclua descrição detalhada do problema
 - Adicione screenshots se possível
 
 ### 💡 Sugestões
-- Use as [GitHub Discussions](https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/discussions)
+- Use as [GitHub Discussions](https://github.com/ricardofrugoni/seguranca-rio-analise-preditiva/discussions)
 - Descreva sua ideia detalhadamente
 - Explique como isso beneficiaria o projeto
 
 ## 📞 Suporte
 
-- **Issues**: https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/issues
+- **Issues**: https://github.com/ricardofrugoni/seguranca-rio-analise-preditiva/issues
 - **Documentação**: README.md completo
 - **Email**: rfrugoni@provion.com.br
 
