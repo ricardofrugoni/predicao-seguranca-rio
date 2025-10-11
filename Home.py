@@ -16,7 +16,7 @@ from pathlib import Path
 
 # Configuração da página
 st.set_page_config(
-    page_title="Análise Preditiva de Violência - Rio de Janeiro",
+    page_title="Segurança Rio Preditiva - Análise de Violência",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded"

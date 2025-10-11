@@ -78,7 +78,7 @@ gatherUsageStats = false
 ### 3.4 Deploy
 - Clique em **"Deploy!"**
 - Aguarde a compilação (2-5 minutos)
-- Sua aplicação estará disponível em: `https://violencia-rio-analise-preditiva.streamlit.app`
+- Sua aplicação estará disponível em: `https://seguranca-rio-preditiva.streamlit.app`
 
 ## 🔧 Passo 4: Configurações Específicas
 
@@ -130,7 +130,7 @@ O arquivo README.md já está completo com:
 Adicione no topo do README.md:
 
 ```markdown
-[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://violencia-rio-analise-preditiva.streamlit.app)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://seguranca-rio-preditiva.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)](https://r-project.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
@@ -211,7 +211,7 @@ st.markdown("""
 
 ### 9.1 URL da aplicação
 ```
-https://violencia-rio-analise-preditiva.streamlit.app
+https://seguranca-rio-preditiva.streamlit.app
 ```
 
 ### 9.2 Compartilhar no LinkedIn
@@ -223,7 +223,7 @@ https://violencia-rio-analise-preditiva.streamlit.app
 ✅ Dashboard interativo
 ✅ Python + R híbrido
 
-Acesse: https://violencia-rio-analise-preditiva.streamlit.app
+Acesse: https://seguranca-rio-preditiva.streamlit.app
 
 #DataScience #MachineLearning #Python #R #ViolenceAnalysis #RioDeJaneiro
 ```
@@ -237,7 +237,7 @@ Acesse: https://violencia-rio-analise-preditiva.streamlit.app
 ✅ Dashboard Streamlit profissional
 ✅ Deploy automático
 
-🔗 https://violencia-rio-analise-preditiva.streamlit.app
+🔗 https://seguranca-rio-preditiva.streamlit.app
 
 #DataScience #ML #Python #R
 ```
@@ -256,7 +256,7 @@ Acesse: https://violencia-rio-analise-preditiva.streamlit.app
 ## 🎉 Pronto!
 
 Seu sistema estará disponível publicamente em:
-**https://violencia-rio-analise-preditiva.streamlit.app**
+**https://seguranca-rio-preditiva.streamlit.app**
 
 ### 📞 Suporte
 - **GitHub Issues**: Para bugs e melhorias

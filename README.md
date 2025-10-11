@@ -1,6 +1,6 @@
 # 🔮 Sistema de Análise Preditiva de Violência no Rio de Janeiro
 
-[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://violencia-rio-analise-preditiva.streamlit.app)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://seguranca-rio-preditiva.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)](https://r-project.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
@@ -8,7 +8,7 @@
 Sistema completo de análise preditiva de violência no município do Rio de Janeiro, combinando **Python** e **R** em uma arquitetura híbrida otimizada.
 
 ## 🌐 **Acesse a Aplicação Online**
-**[https://violencia-rio-analise-preditiva.streamlit.app](https://violencia-rio-analise-preditiva.streamlit.app)**
+**[https://seguranca-rio-preditiva.streamlit.app](https://seguranca-rio-preditiva.streamlit.app)**
 
 ## 🚀 Características Principais
 
@@ -194,7 +194,7 @@ git push origin main
 
 **URL pública será gerada:**
 ```
-https://violencia-rio-analise-preditiva.streamlit.app
+https://seguranca-rio-preditiva.streamlit.app
 ```
 
 ## 🤖 Modelos Disponíveis

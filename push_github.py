@@ -113,7 +113,7 @@ def show_next_steps(username):
     print("   Main file: Home.py")
     print()
     print("3. Sua aplicação estará em:")
-    print(f"   https://violencia-rio-analise-preditiva.streamlit.app")
+    print(f"   https://seguranca-rio-preditiva.streamlit.app")
     print()
     
     # Abre GitHub no navegador

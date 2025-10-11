@@ -93,7 +93,7 @@ echo    Repository: violencia-rio-analise-preditiva
 echo    Main file: Home.py
 echo.
 echo 3. Sua aplicação estará em:
-echo    https://violencia-rio-analise-preditiva.streamlit.app
+echo    https://seguranca-rio-preditiva.streamlit.app
 echo.
 
 REM Abre GitHub no navegador

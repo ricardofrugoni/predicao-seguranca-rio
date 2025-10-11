@@ -36,7 +36,7 @@ git push -u origin main
 ### 5️⃣ Pronto! 🎉
 Sua aplicação estará em:
 ```
-https://violencia-rio-analise-preditiva.streamlit.app
+https://seguranca-rio-preditiva.streamlit.app
 ```
 
 ## 🔄 Atualizações Futuras
