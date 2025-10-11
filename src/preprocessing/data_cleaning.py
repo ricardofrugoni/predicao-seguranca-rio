@@ -2,11 +2,28 @@
 Módulo para limpeza e padronização de dados de criminalidade
 """
 
-import pandas as pd
-import numpy as np
+# Importações condicionais para evitar erros
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    print("⚠️ Pandas não disponível.")
+
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    print("⚠️ NumPy não disponível.")
+
 from datetime import datetime
 import logging
 from typing import Dict, List, Optional, Tuple
+
+# Verifica se as bibliotecas essenciais estão disponíveis
+if not PANDAS_AVAILABLE or not NUMPY_AVAILABLE:
+    raise ImportError("Bibliotecas essenciais (pandas, numpy) não estão disponíveis.")
 
 # Configuração de logging
 logging.basicConfig(level=logging.INFO)
