@@ -23,14 +23,12 @@ try:
     ARIMA_AVAILABLE = True
 except ImportError:
     ARIMA_AVAILABLE = False
-    st.warning("⚠️ statsmodels não instalado. ARIMA desabilitado.")
 
 try:
     from prophet import Prophet
     PROPHET_AVAILABLE = True
 except ImportError:
     PROPHET_AVAILABLE = False
-    st.warning("⚠️ Prophet não instalado. Prophet desabilitado.")
 
 try:
     from sklearn.ensemble import RandomForestRegressor
@@ -38,7 +36,6 @@ try:
     ML_AVAILABLE = True
 except ImportError:
     ML_AVAILABLE = False
-    st.warning("⚠️ scikit-learn ou xgboost não instalado. ML desabilitado.")
 
 try:
     import tensorflow as tf
@@ -50,7 +47,6 @@ try:
     LSTM_AVAILABLE = True
 except ImportError:
     LSTM_AVAILABLE = False
-    st.warning("⚠️ TensorFlow não instalado. LSTM desabilitado.")
 
 # ============================================================================
 # CLASSE: PREPARAÇÃO DE DADOS
@@ -374,10 +370,24 @@ def main():
         
         use_ensemble = st.checkbox("Ensemble", value=True)
         
+        # Status dos modelos
+        st.markdown("---")
+        st.subheader("📊 Status dos Modelos")
+        
+        status_models = {
+            "ARIMA": "✅" if ARIMA_AVAILABLE else "❌",
+            "Prophet": "✅" if PROPHET_AVAILABLE else "❌", 
+            "Random Forest": "✅" if ML_AVAILABLE else "❌",
+            "XGBoost": "✅" if ML_AVAILABLE else "❌",
+            "LSTM": "✅" if LSTM_AVAILABLE else "❌"
+        }
+        
+        for model, status in status_models.items():
+            st.write(f"{status} {model}")
+        
         if not modelos_disponiveis:
-            st.error("❌ Nenhum modelo disponível! Instale as dependências.")
-            st.code("pip install statsmodels prophet xgboost scikit-learn")
-            st.stop()
+            st.warning("⚠️ Nenhum modelo disponível! Usando dados de exemplo.")
+            st.info("💡 Para ativar modelos, instale: pip install statsmodels prophet xgboost scikit-learn")
     
     # ==================== PROCESSAMENTO ====================
     

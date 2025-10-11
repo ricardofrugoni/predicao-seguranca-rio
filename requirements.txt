@@ -1,57 +1,8 @@
-# ============================================================================
-# REQUIREMENTS MÍNIMOS - SEM R, SEM rpy2
-# ============================================================================
-# Instale APENAS isso para começar:
-# pip install -r requirements.txt
-# ============================================================================
-
-# Streamlit (obrigatório)
 streamlit>=1.30.0
-
-# Data manipulation (obrigatório)
 pandas>=2.1.0
 numpy>=1.24.0
-
-# Visualização (obrigatório)
 plotly>=5.18.0
-
-# ============================================================================
-# MODELOS - Instale conforme necessidade
-# ============================================================================
-
-# Para ARIMA
 statsmodels>=0.14.0
-
-# Para Prophet
 prophet>=1.1.0
-
-# Para ML (Random Forest, XGBoost)
 scikit-learn>=1.3.0
 xgboost>=2.0.0
-
-# Para LSTM (opcional - pesado)
-# tensorflow>=2.15.0
-# OU para Mac M1/M2/M3:
-# tensorflow-macos>=2.15.0
-
-# ============================================================================
-# INSTALAÇÃO PASSO A PASSO (escolha o que precisa)
-# ============================================================================
-
-# 1. APENAS STREAMLIT (teste rápido):
-#    pip install streamlit pandas numpy plotly
-
-# 2. COM MODELOS CLÁSSICOS:
-#    pip install streamlit pandas numpy plotly statsmodels prophet
-
-# 3. COM MACHINE LEARNING:
-#    pip install streamlit pandas numpy plotly statsmodels prophet scikit-learn xgboost
-
-# 4. COMPLETO (com Deep Learning):
-#    pip install streamlit pandas numpy plotly statsmodels prophet scikit-learn xgboost tensorflow
-
-# ============================================================================
-# IMPORTANTE: NÃO INSTALE rpy2!
-# ============================================================================
-# O código foi adaptado para funcionar 100% em Python
-# Sem necessidade de R ou rpy2
