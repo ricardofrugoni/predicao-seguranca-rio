@@ -1,7 +1,3 @@
-# Pacotes do sistema para Streamlit Cloud
-# Instala dependências do sistema necessárias
-
-# R e dependências
 r-base
 r-base-dev
 libcurl4-openssl-dev
@@ -10,11 +6,6 @@ libxml2-dev
 libgdal-dev
 libproj-dev
 libgeos-dev
-
-# Python system dependencies
 gdal-bin
-libgdal-dev
 proj-bin
-libproj-dev
 geos-bin
-libgeos-dev
