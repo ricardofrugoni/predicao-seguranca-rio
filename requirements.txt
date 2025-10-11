@@ -1,0 +1,50 @@
+# Dependências Python para Análise de Violência no Rio de Janeiro
+
+# Manipulação de dados
+pandas>=2.0.0
+numpy>=1.24.0
+geopandas>=0.13.0
+shapely>=2.0.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+lightgbm>=4.0.0
+tensorflow>=2.13.0
+keras>=2.13.0
+
+# Análise temporal
+statsmodels>=0.14.0
+prophet>=1.1.0
+
+# Visualização
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+folium>=0.14.0
+bokeh>=3.2.0
+
+# APIs e coleta de dados
+requests>=2.31.0
+aiohttp>=3.8.0
+beautifulsoup4>=4.12.0
+selenium>=4.11.0
+
+# Análise espacial
+pyproj>=3.6.0
+rasterio>=1.3.0
+fiona>=1.9.0
+
+# Integração Python-R
+rpy2>=3.5.0
+
+# Jupyter e desenvolvimento
+jupyter>=1.0.0
+ipykernel>=6.24.0
+notebook>=6.5.0
+
+# Utilitários
+tqdm>=4.65.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+openpyxl>=3.1.0

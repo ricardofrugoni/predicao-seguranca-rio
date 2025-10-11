@@ -1,0 +1,98 @@
+{
+  "R": {
+    "Version": "4.3.0",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cran.rstudio.com"
+      }
+    ]
+  },
+  "Packages": {
+    "sf": {
+      "Package": "sf",
+      "Version": "1.0-14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "sp": {
+      "Package": "sp",
+      "Version": "1.6-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "tidyverse": {
+      "Package": "tidyverse",
+      "Version": "2.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "ggplot2": {
+      "Package": "ggplot2",
+      "Version": "3.4.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "spatstat": {
+      "Package": "spatstat",
+      "Version": "3.0-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "spdep": {
+      "Package": "spdep",
+      "Version": "1.2-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "reticulate": {
+      "Package": "reticulate",
+      "Version": "1.30",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "dplyr": {
+      "Package": "dplyr",
+      "Version": "1.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "readr": {
+      "Package": "readr",
+      "Version": "2.1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "lubridate": {
+      "Package": "lubridate",
+      "Version": "1.9.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "knitr": {
+      "Package": "knitr",
+      "Version": "1.43",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    },
+    "rmarkdown": {
+      "Package": "rmarkdown",
+      "Version": "2.23",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7b7b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+    }
+  }
+}
+
