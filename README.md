@@ -1,6 +1,14 @@
 # 🔮 Sistema de Análise Preditiva de Violência no Rio de Janeiro
 
+[![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://violencia-rio-analise-preditiva.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)](https://r-project.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
 Sistema completo de análise preditiva de violência no município do Rio de Janeiro, combinando **Python** e **R** em uma arquitetura híbrida otimizada.
+
+## 🌐 **Acesse a Aplicação Online**
+**[https://violencia-rio-analise-preditiva.streamlit.app](https://violencia-rio-analise-preditiva.streamlit.app)**
 
 ## 🚀 Características Principais
 
@@ -10,6 +18,39 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 - **Arquitetura Híbrida**: Python + R otimizada
 - **Cache Inteligente**: Performance máxima
 - **Deploy Fácil**: Streamlit Cloud compatível
+
+## 📊 Status do Projeto
+
+| Componente | Status | Descrição |
+|------------|--------|-----------|
+| 🏠 Dashboard Principal | ✅ Funcionando | Interface Streamlit completa |
+| 🤖 Modelos ML | ✅ Funcionando | 8 modelos implementados |
+| 🗺️ Análises Espaciais | ✅ Funcionando | Integração Python + R |
+| 📈 Visualizações | ✅ Funcionando | Plotly + Folium interativos |
+| 🚀 Deploy | ✅ Online | Streamlit Cloud ativo |
+| 📚 Documentação | ✅ Completa | README + guias detalhados |
+
+## 🛠️ Tecnologias Utilizadas
+
+### 🐍 Python
+- **Streamlit** - Interface web interativa
+- **Pandas/NumPy** - Manipulação de dados
+- **Plotly** - Visualizações dinâmicas
+- **Scikit-learn** - Machine Learning
+- **TensorFlow/Keras** - Deep Learning
+- **Statsmodels** - Séries temporais
+- **Geopandas** - Análise geoespacial
+
+### 📊 R
+- **spdep** - Análise de dependência espacial
+- **spatstat** - Estatística espacial
+- **sf** - Manipulação de dados geoespaciais
+- **forecast** - Séries temporais avançadas
+
+### ☁️ Deploy
+- **Streamlit Cloud** - Hospedagem gratuita
+- **GitHub** - Controle de versão
+- **Docker** - Containerização (opcional)
 
 ## 📋 Índice
 
@@ -24,8 +65,8 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 
 ### Passo 1: Clone o Repositório
 ```bash
-git clone https://github.com/seu-usuario/violencia-rio-ml.git
-cd violencia-rio-ml
+git clone https://github.com/ricardofrugoni/violencia-rio-analise-preditiva.git
+cd violencia-rio-analise-preditiva
 ```
 
 ### Passo 2: Crie Ambiente Virtual
@@ -77,7 +118,7 @@ python -c "import streamlit, pandas, tensorflow, xgboost; print('✅ Tudo OK!')"
 ## 📁 Estrutura do Projeto
 
 ```
-violencia-rio-ml/
+violencia-rio-analise-preditiva/
 │
 ├── Home.py                          # 🏠 Página principal do Streamlit
 │
@@ -153,7 +194,7 @@ git push origin main
 
 **URL pública será gerada:**
 ```
-https://seu-usuario-violencia-rio-ml.streamlit.app
+https://violencia-rio-analise-preditiva.streamlit.app
 ```
 
 ## 🤖 Modelos Disponíveis
@@ -388,11 +429,31 @@ def funcao_pesada():
 - ✅ Prophet (visualizações bonitas)
 - ✅ Feature Importance do XGBoost
 
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Para contribuir:
+
+1. **Fork** o repositório
+2. **Crie** uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. **Commit** suas mudanças (`git commit -m 'Adiciona nova feature'`)
+4. **Push** para a branch (`git push origin feature/nova-feature`)
+5. **Abra** um Pull Request
+
+### 🐛 Reportar Bugs
+- Use as [GitHub Issues](https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/issues)
+- Inclua descrição detalhada do problema
+- Adicione screenshots se possível
+
+### 💡 Sugestões
+- Use as [GitHub Discussions](https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/discussions)
+- Descreva sua ideia detalhadamente
+- Explique como isso beneficiaria o projeto
+
 ## 📞 Suporte
 
-- **Issues**: https://github.com/seu-usuario/violencia-rio-ml/issues
-- **Documentação**: https://docs.seu-projeto.com
-- **Email**: seu-email@exemplo.com
+- **Issues**: https://github.com/ricardofrugoni/violencia-rio-analise-preditiva/issues
+- **Documentação**: README.md completo
+- **Email**: rfrugoni@provion.com.br
 
 ## 🎉 Pronto!
 
