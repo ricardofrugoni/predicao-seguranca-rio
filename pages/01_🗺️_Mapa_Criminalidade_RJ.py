@@ -81,7 +81,7 @@ if not mapa_carregado:
         ax.set_title('Município do Rio de Janeiro', fontsize=16, weight='bold', pad=20, color='#333')
         
         plt.tight_layout()
-        st.pyplot(fig, use_column_width=True)
+        st.pyplot(fig)
         plt.close()
     else:
         st.error("❌ Não foi possível carregar nenhum mapa")
