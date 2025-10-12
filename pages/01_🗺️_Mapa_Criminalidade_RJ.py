@@ -75,14 +75,40 @@ def criar_mapa_choropleth():
     """Cria mapa choropleth com as 4 zonas do Rio de Janeiro"""
     
     # Carregar GeoJSON das zonas
-    geojson_path = Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson"
+    # Tenta múltiplos caminhos possíveis
+    possiveis_caminhos = [
+        Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
+        Path("data/shapefiles/zonas_rio.geojson"),
+        Path("projeto_violencia_rj/data/shapefiles/zonas_rio.geojson"),
+    ]
     
-    if geojson_path.exists():
-        with open(geojson_path, 'r', encoding='utf-8') as f:
-            geojson_zonas = json.load(f)
-    else:
-        st.error("❌ Arquivo GeoJSON das zonas não encontrado!")
+    geojson_zonas = None
+    caminho_usado = None
+    
+    for geojson_path in possiveis_caminhos:
+        try:
+            if geojson_path.exists():
+                with open(geojson_path, 'r', encoding='utf-8') as f:
+                    geojson_zonas = json.load(f)
+                caminho_usado = geojson_path
+                break
+        except Exception as e:
+            continue
+    
+    if not geojson_zonas:
+        st.error(f"❌ Arquivo GeoJSON das zonas não encontrado!")
+        
+        import os
+        st.error(f"Diretório atual: {os.getcwd()}")
+        
+        for p in possiveis_caminhos:
+            st.text(f"{'✅' if p.exists() else '❌'} {p} {'(absoluto: ' + str(p.absolute()) + ')' if p.exists() else ''}")
+        
+        st.info("💡 Execute: `python scripts/criar_mapa_zonas.py` na pasta projeto_violencia_rj")
         return None
+    
+    # Debug: mostrar qual arquivo foi carregado
+    # st.success(f"✅ GeoJSON carregado de: {caminho_usado}")
     
     # Preparar DataFrame para o choropleth
     df_mapa = pd.DataFrame([
