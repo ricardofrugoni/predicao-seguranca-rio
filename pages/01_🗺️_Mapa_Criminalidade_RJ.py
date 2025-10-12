@@ -29,8 +29,8 @@ st.set_page_config(
 )
 
 st.title("🗺️ Mapa de Criminalidade do Município do Rio de Janeiro")
-st.markdown("### Intensidade Criminal por Zona")
-st.warning("⚠️ **ATENÇÃO:** Este mapa exibe APENAS o município do Rio de Janeiro (4 zonas principais). Não inclui Baixada Fluminense, Niterói ou outros municípios.")
+st.markdown("### Intensidade Criminal por Região")
+st.warning("⚠️ **ATENÇÃO:** Este mapa exibe APENAS o município do Rio de Janeiro. Não inclui Baixada Fluminense, Niterói, São Gonçalo ou outros municípios da região metropolitana.")
 
 # ============================================================================
 # DADOS DAS 4 ZONAS DO MUNICÍPIO
@@ -74,13 +74,15 @@ for zona, dados in dados_zonas.items():
 def criar_mapa_choropleth():
     """Cria mapa choropleth com as 4 zonas do Rio de Janeiro"""
     
-    # Carregar GeoJSON das zonas (versão realista)
-    # Tenta múltiplos caminhos possíveis
+    # Carregar GeoJSON com áreas detalhadas do município
+    # Tenta múltiplos caminhos possíveis (prioriza versão detalhada)
     possiveis_caminhos = [
+        Path(__file__).parent.parent / "data" / "shapefiles" / "areas_detalhadas_rio.geojson",
+        Path("data/shapefiles/areas_detalhadas_rio.geojson"),
+        Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson"),
+        # Fallbacks
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_realista.geojson",
         Path("data/shapefiles/zonas_rio_realista.geojson"),
-        Path("projeto_violencia_rj/data/shapefiles/zonas_rio_realista.geojson"),
-        # Fallback para versão anterior
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
         Path("data/shapefiles/zonas_rio.geojson"),
     ]
@@ -190,13 +192,32 @@ def criar_mapa_choropleth():
         smooth_factor=0
     ).add_to(mapa)
     
-    # Adicionar tooltips personalizados
-    style_function = lambda x: {
-        'fillColor': dados_zonas[x['properties']['nome']]['cor'],
-        'color': '#000000',
-        'weight': 2,
-        'fillOpacity': 1.0
+    # Mapeamento de cores por nível (para áreas detalhadas)
+    cores_por_nivel = {
+        "Muito Baixo": "#2ecc71",  # Verde
+        "Baixo": "#27ae60",         # Verde escuro
+        "Médio": "#f39c12",         # Laranja
+        "Alto": "#e67e22",          # Laranja escuro
+        "Muito Alto": "#e74c3c"     # Vermelho
     }
+    
+    # Adicionar tooltips personalizados
+    def style_function(feature):
+        nome = feature['properties'].get('nome', '')
+        nivel = feature['properties'].get('nivel', 'Médio')
+        
+        # Tenta pegar cor dos dados_zonas, senão usa o nível
+        if nome in dados_zonas:
+            cor = dados_zonas[nome]['cor']
+        else:
+            cor = cores_por_nivel.get(nivel, '#f39c12')
+        
+        return {
+            'fillColor': cor,
+            'color': '#000000',
+            'weight': 1,
+            'fillOpacity': 1.0
+        }
     
     highlight_function = lambda x: {
         'weight': 4,
@@ -301,7 +322,7 @@ with col1:
     mapa = criar_mapa_choropleth()
     
     if mapa:
-        folium_static(mapa, width=900, height=600)
+    folium_static(mapa, width=900, height=600)
     else:
         st.error("Erro ao carregar o mapa. Execute o script: `python scripts/criar_mapa_zonas.py`")
 
