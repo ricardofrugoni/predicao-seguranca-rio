@@ -1,11 +1,12 @@
 import streamlit as st
-import folium
-from streamlit_folium import st_folium
 import geopandas as gpd
+import matplotlib.pyplot as plt
 from pathlib import Path
+import numpy as np
 
 st.set_page_config(page_title="Mapa Rio de Janeiro", page_icon="🗺️", layout="wide")
 st.title("🗺️ Mapa do Município do Rio de Janeiro")
+st.markdown("### Divisão Territorial por Bairros")
 
 @st.cache_data
 def carregar_mapa():
@@ -24,84 +25,51 @@ def carregar_mapa():
                 return gdf
     return None
 
-cores_zona = {
-    'zona norte': '#E8B4B8',
-    'zona sul': '#FFE4A3',
-    'zona oeste': '#B4D3B2',
-    'centro': '#A8C5DD'
-}
-
-def get_cor_zona(nome):
-    nome_lower = nome.lower()
-    for chave, cor in cores_zona.items():
-        if chave in nome_lower:
-            return cor
-    return '#D3D3D3'
+cores_pastel = [
+    '#FFB6C1', '#FFE4B5', '#E0BBE4', '#B4D7A8', '#A8DADC', '#F4A6B5',
+    '#D4A5A5', '#FFD4A3', '#C9E4CA', '#A3C1DA', '#F8C8DC', '#E4C1F9',
+    '#B5EAD7', '#FFD6BA', '#C7CEEA', '#FFDAC1', '#E2F0CB', '#B5B8D3',
+    '#FFB3BA', '#FFFFBA', '#BAFFC9', '#BAE1FF', '#F0E68C', '#DDA0DD'
+]
 
 dados = carregar_mapa()
 
 if dados is None:
     st.error("Não foi possível carregar o mapa")
-    st.info("Arquivo GeoJSON não encontrado")
 else:
-    limites = dados.total_bounds
-    centro = [(limites[1] + limites[3]) / 2, (limites[0] + limites[2]) / 2]
+    fig, ax = plt.subplots(1, 1, figsize=(16, 12))
+    fig.patch.set_facecolor('#F5F5F5')
+    ax.set_facecolor('#F5F5F5')
     
-    mapa = folium.Map(
-        location=centro,
-        zoom_start=11,
-        tiles='OpenStreetMap',
-        dragging=False,
-        scrollWheelZoom=False,
-        zoomControl=False,
-        doubleClickZoom=False,
-        attributionControl=False
-    )
+    np.random.seed(42)
+    for idx, row in dados.iterrows():
+        cor = np.random.choice(cores_pastel)
+        dados[dados.index == idx].plot(ax=ax, color=cor, edgecolor='white', linewidth=2, alpha=0.9)
+        
+        if row.geometry.geom_type == 'Polygon':
+            centroid = row.geometry.centroid
+        else:
+            largest = max(row.geometry.geoms, key=lambda p: p.area)
+            centroid = largest.centroid
+        
+        nome = row.get('zona', f'Área {idx+1}')
+        ax.text(centroid.x, centroid.y, nome.upper(), fontsize=11, ha='center', va='center',
+                color='#333', weight='bold', bbox=dict(boxstyle='round,pad=0.4',
+                facecolor='white', alpha=0.7, edgecolor='none'))
     
-    mapa.fit_bounds([[limites[1], limites[0]], [limites[3], limites[2]]])
+    ax.axis('off')
+    bounds = dados.total_bounds
+    ax.set_xlim([bounds[0] - 0.03, bounds[2] + 0.03])
+    ax.set_ylim([bounds[1] - 0.03, bounds[3] + 0.03])
     
-    folium.GeoJson(
-        dados,
-        style_function=lambda feature: {
-            'fillColor': get_cor_zona(feature['properties'].get('zona', '')),
-            'fillOpacity': 0.6,
-            'color': 'white',
-            'weight': 3
-        },
-        tooltip=folium.GeoJsonTooltip(
-            fields=['zona'],
-            aliases=['Região:'],
-            sticky=True
-        )
-    ).add_to(mapa)
+    ax.set_title('Mapa do Município do Rio de Janeiro', fontsize=20, weight='bold', pad=20, color='#333')
     
-    st_folium(mapa, width=1400, height=800)
+    plt.tight_layout()
+    st.pyplot(fig, clear_figure=True)
+    plt.close('all')
     
     st.markdown("---")
-    st.markdown("### Divisão Territorial do Município")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    col1.markdown(
-        '<div style="background:#E8B4B8;padding:20px;border-radius:10px;text-align:center;color:#333;font-weight:bold;font-size:16px;">ZONA NORTE</div>',
-        unsafe_allow_html=True
-    )
-    
-    col2.markdown(
-        '<div style="background:#FFE4A3;padding:20px;border-radius:10px;text-align:center;color:#333;font-weight:bold;font-size:16px;">ZONA SUL</div>',
-        unsafe_allow_html=True
-    )
-    
-    col3.markdown(
-        '<div style="background:#B4D3B2;padding:20px;border-radius:10px;text-align:center;color:#333;font-weight:bold;font-size:16px;">ZONA OESTE</div>',
-        unsafe_allow_html=True
-    )
-    
-    col4.markdown(
-        '<div style="background:#A8C5DD;padding:20px;border-radius:10px;text-align:center;color:#333;font-weight:bold;font-size:16px;">CENTRO</div>',
-        unsafe_allow_html=True
-    )
-    
-    st.markdown("---")
-    st.caption("Mapa Geográfico do Município do Rio de Janeiro | OpenStreetMap")
+    st.info(f"📍 **{len(dados)}** divisões territoriais no município do Rio de Janeiro")
 
+st.markdown("---")
+st.caption("Mapa Geográfico - Município do Rio de Janeiro")
