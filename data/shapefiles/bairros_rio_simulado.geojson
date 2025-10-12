@@ -1,0 +1,1078 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Copacabana",
+        "zona": "Zona Sul",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.1972,
+              -22.9861
+            ],
+            [
+              -43.1672,
+              -22.9861
+            ],
+            [
+              -43.1672,
+              -22.9561
+            ],
+            [
+              -43.1972,
+              -22.9561
+            ],
+            [
+              -43.1972,
+              -22.9861
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Ipanema",
+        "zona": "Zona Sul",
+        "nivel": "Muito Baixo",
+        "cor": "#27ae60",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2198,
+              -22.9988
+            ],
+            [
+              -43.1898,
+              -22.9988
+            ],
+            [
+              -43.1898,
+              -22.968799999999998
+            ],
+            [
+              -43.2198,
+              -22.968799999999998
+            ],
+            [
+              -43.2198,
+              -22.9988
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Leblon",
+        "zona": "Zona Sul",
+        "nivel": "Muito Baixo",
+        "cor": "#27ae60",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2436,
+              -22.9994
+            ],
+            [
+              -43.2136,
+              -22.9994
+            ],
+            [
+              -43.2136,
+              -22.9694
+            ],
+            [
+              -43.2436,
+              -22.9694
+            ],
+            [
+              -43.2436,
+              -22.9994
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Botafogo",
+        "zona": "Zona Sul",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.1979,
+              -22.9617
+            ],
+            [
+              -43.167899999999996,
+              -22.9617
+            ],
+            [
+              -43.167899999999996,
+              -22.9317
+            ],
+            [
+              -43.1979,
+              -22.9317
+            ],
+            [
+              -43.1979,
+              -22.9617
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Flamengo",
+        "zona": "Zona Sul",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.1905,
+              -22.9461
+            ],
+            [
+              -43.1605,
+              -22.9461
+            ],
+            [
+              -43.1605,
+              -22.9161
+            ],
+            [
+              -43.1905,
+              -22.9161
+            ],
+            [
+              -43.1905,
+              -22.9461
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Laranjeiras",
+        "zona": "Zona Sul",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.202,
+              -22.9493
+            ],
+            [
+              -43.172,
+              -22.9493
+            ],
+            [
+              -43.172,
+              -22.9193
+            ],
+            [
+              -43.202,
+              -22.9193
+            ],
+            [
+              -43.202,
+              -22.9493
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Gávea",
+        "zona": "Zona Sul",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2595,
+              -22.9944
+            ],
+            [
+              -43.2295,
+              -22.9944
+            ],
+            [
+              -43.2295,
+              -22.964399999999998
+            ],
+            [
+              -43.2595,
+              -22.964399999999998
+            ],
+            [
+              -43.2595,
+              -22.9944
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Lagoa",
+        "zona": "Zona Sul",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2206,
+              -22.9864
+            ],
+            [
+              -43.190599999999996,
+              -22.9864
+            ],
+            [
+              -43.190599999999996,
+              -22.9564
+            ],
+            [
+              -43.2206,
+              -22.9564
+            ],
+            [
+              -43.2206,
+              -22.9864
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Centro",
+        "zona": "Centro",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2246,
+              -22.9185
+            ],
+            [
+              -43.1946,
+              -22.9185
+            ],
+            [
+              -43.1946,
+              -22.8885
+            ],
+            [
+              -43.2246,
+              -22.8885
+            ],
+            [
+              -43.2246,
+              -22.9185
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Lapa",
+        "zona": "Centro",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.1946,
+              -22.9283
+            ],
+            [
+              -43.1646,
+              -22.9283
+            ],
+            [
+              -43.1646,
+              -22.8983
+            ],
+            [
+              -43.1946,
+              -22.8983
+            ],
+            [
+              -43.1946,
+              -22.9283
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Santa Teresa",
+        "zona": "Centro",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.204,
+              -22.934
+            ],
+            [
+              -43.174,
+              -22.934
+            ],
+            [
+              -43.174,
+              -22.904
+            ],
+            [
+              -43.204,
+              -22.904
+            ],
+            [
+              -43.204,
+              -22.934
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Saúde",
+        "zona": "Centro",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2064,
+              -22.9103
+            ],
+            [
+              -43.1764,
+              -22.9103
+            ],
+            [
+              -43.1764,
+              -22.8803
+            ],
+            [
+              -43.2064,
+              -22.8803
+            ],
+            [
+              -43.2064,
+              -22.9103
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Tijuca",
+        "zona": "Zona Norte",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2491,
+              -22.933600000000002
+            ],
+            [
+              -43.2191,
+              -22.933600000000002
+            ],
+            [
+              -43.2191,
+              -22.9036
+            ],
+            [
+              -43.2491,
+              -22.9036
+            ],
+            [
+              -43.2491,
+              -22.933600000000002
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Vila Isabel",
+        "zona": "Zona Norte",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.263600000000004,
+              -22.9319
+            ],
+            [
+              -43.2336,
+              -22.9319
+            ],
+            [
+              -43.2336,
+              -22.901899999999998
+            ],
+            [
+              -43.263600000000004,
+              -22.901899999999998
+            ],
+            [
+              -43.263600000000004,
+              -22.9319
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Maracanã",
+        "zona": "Zona Norte",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.245200000000004,
+              -22.9271
+            ],
+            [
+              -43.2152,
+              -22.9271
+            ],
+            [
+              -43.2152,
+              -22.8971
+            ],
+            [
+              -43.245200000000004,
+              -22.8971
+            ],
+            [
+              -43.245200000000004,
+              -22.9271
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Méier",
+        "zona": "Zona Norte",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2933,
+              -22.9175
+            ],
+            [
+              -43.2633,
+              -22.9175
+            ],
+            [
+              -43.2633,
+              -22.8875
+            ],
+            [
+              -43.2933,
+              -22.8875
+            ],
+            [
+              -43.2933,
+              -22.9175
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Engenho Novo",
+        "zona": "Zona Norte",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2781,
+              -22.9193
+            ],
+            [
+              -43.2481,
+              -22.9193
+            ],
+            [
+              -43.2481,
+              -22.8893
+            ],
+            [
+              -43.2781,
+              -22.8893
+            ],
+            [
+              -43.2781,
+              -22.9193
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Cachambi",
+        "zona": "Zona Norte",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2864,
+              -22.9115
+            ],
+            [
+              -43.2564,
+              -22.9115
+            ],
+            [
+              -43.2564,
+              -22.8815
+            ],
+            [
+              -43.2864,
+              -22.8815
+            ],
+            [
+              -43.2864,
+              -22.9115
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Penha",
+        "zona": "Zona Norte",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.2991,
+              -22.8562
+            ],
+            [
+              -43.2691,
+              -22.8562
+            ],
+            [
+              -43.2691,
+              -22.8262
+            ],
+            [
+              -43.2991,
+              -22.8262
+            ],
+            [
+              -43.2991,
+              -22.8562
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Irajá",
+        "zona": "Zona Norte",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.341300000000004,
+              -22.8476
+            ],
+            [
+              -43.3113,
+              -22.8476
+            ],
+            [
+              -43.3113,
+              -22.8176
+            ],
+            [
+              -43.341300000000004,
+              -22.8176
+            ],
+            [
+              -43.341300000000004,
+              -22.8476
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Madureira",
+        "zona": "Zona Norte",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.3514,
+              -22.8861
+            ],
+            [
+              -43.3214,
+              -22.8861
+            ],
+            [
+              -43.3214,
+              -22.856099999999998
+            ],
+            [
+              -43.3514,
+              -22.856099999999998
+            ],
+            [
+              -43.3514,
+              -22.8861
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Cascadura",
+        "zona": "Zona Norte",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.344500000000004,
+              -22.9005
+            ],
+            [
+              -43.3145,
+              -22.9005
+            ],
+            [
+              -43.3145,
+              -22.8705
+            ],
+            [
+              -43.344500000000004,
+              -22.8705
+            ],
+            [
+              -43.344500000000004,
+              -22.9005
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Barra da Tijuca",
+        "zona": "Zona Oeste",
+        "nivel": "Baixo",
+        "cor": "#2ecc71",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.3797,
+              -23.0201
+            ],
+            [
+              -43.3497,
+              -23.0201
+            ],
+            [
+              -43.3497,
+              -22.990099999999998
+            ],
+            [
+              -43.3797,
+              -22.990099999999998
+            ],
+            [
+              -43.3797,
+              -23.0201
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Recreio",
+        "zona": "Zona Oeste",
+        "nivel": "Médio",
+        "cor": "#f39c12",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.4797,
+              -23.035600000000002
+            ],
+            [
+              -43.4497,
+              -23.035600000000002
+            ],
+            [
+              -43.4497,
+              -23.0056
+            ],
+            [
+              -43.4797,
+              -23.0056
+            ],
+            [
+              -43.4797,
+              -23.035600000000002
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Campo Grande",
+        "zona": "Zona Oeste",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.5768,
+              -22.9158
+            ],
+            [
+              -43.5468,
+              -22.9158
+            ],
+            [
+              -43.5468,
+              -22.8858
+            ],
+            [
+              -43.5768,
+              -22.8858
+            ],
+            [
+              -43.5768,
+              -22.9158
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Bangu",
+        "zona": "Zona Oeste",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.4809,
+              -22.893900000000002
+            ],
+            [
+              -43.4509,
+              -22.893900000000002
+            ],
+            [
+              -43.4509,
+              -22.8639
+            ],
+            [
+              -43.4809,
+              -22.8639
+            ],
+            [
+              -43.4809,
+              -22.893900000000002
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Realengo",
+        "zona": "Zona Oeste",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.445,
+              -22.8956
+            ],
+            [
+              -43.415,
+              -22.8956
+            ],
+            [
+              -43.415,
+              -22.8656
+            ],
+            [
+              -43.445,
+              -22.8656
+            ],
+            [
+              -43.445,
+              -22.8956
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Santa Cruz",
+        "zona": "Zona Oeste",
+        "nivel": "Muito Alto",
+        "cor": "#e74c3c",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.6992,
+              -22.9344
+            ],
+            [
+              -43.6692,
+              -22.9344
+            ],
+            [
+              -43.6692,
+              -22.9044
+            ],
+            [
+              -43.6992,
+              -22.9044
+            ],
+            [
+              -43.6992,
+              -22.9344
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Jacarepaguá",
+        "zona": "Zona Oeste",
+        "nivel": "Alto",
+        "cor": "#e67e22",
+        "municipio": "Rio de Janeiro"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.3791,
+              -22.9481
+            ],
+            [
+              -43.3491,
+              -22.9481
+            ],
+            [
+              -43.3491,
+              -22.9181
+            ],
+            [
+              -43.3791,
+              -22.9181
+            ],
+            [
+              -43.3791,
+              -22.9481
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
