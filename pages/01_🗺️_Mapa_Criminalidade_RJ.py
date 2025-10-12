@@ -1,6 +1,7 @@
 import streamlit as st
+import folium
+from streamlit_folium import st_folium
 import geopandas as gpd
-import matplotlib.pyplot as plt
 from pathlib import Path
 
 st.set_page_config(page_title="Mapa Rio de Janeiro", page_icon="🗺️", layout="wide")
@@ -28,7 +29,7 @@ def load_data():
             continue
     return None
 
-cores = {
+    cores = {
     'Zona Norte': '#E57373',
     'Zona Sul': '#FFD54F',
     'Zona Oeste': '#81C784',
@@ -46,34 +47,37 @@ gdf = load_data()
 if gdf is None:
     st.error("Dados não encontrados")
 else:
-    fig, ax = plt.subplots(1, 1, figsize=(14, 10))
-    fig.patch.set_facecolor('#F5F5F5')
-    ax.set_facecolor('#F5F5F5')
-    
-    for idx, row in gdf.iterrows():
-        nome = row.get('nome_zona', '')
-        cor = get_cor(nome)
-        gdf[gdf.index == idx].plot(ax=ax, color=cor, edgecolor='white', linewidth=2.5, alpha=0.8)
-        
-        if row.geometry.geom_type == 'Polygon':
-            centroid = row.geometry.centroid
-        else:
-            largest = max(row.geometry.geoms, key=lambda p: p.area)
-            centroid = largest.centroid
-        
-        ax.text(centroid.x, centroid.y, nome.upper(), fontsize=11, ha='center', va='center', 
-                color='#333', weight='bold', bbox=dict(boxstyle='round,pad=0.5', 
-                facecolor='white', alpha=0.7, edgecolor='none'))
-    
-    ax.axis('off')
     bounds = gdf.total_bounds
-    margin = 0.05
-    ax.set_xlim([bounds[0] - margin, bounds[2] + margin])
-    ax.set_ylim([bounds[1] - margin, bounds[3] + margin])
+    center = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     
-    plt.tight_layout()
-    st.pyplot(fig, clear_figure=True)
-    plt.close('all')
+    m = folium.Map(
+        location=center,
+        zoom_start=11,
+        tiles='OpenStreetMap',
+        dragging=False,
+        scrollWheelZoom=False,
+        zoomControl=False,
+        doubleClickZoom=False,
+        attributionControl=False
+    )
+    
+    m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
+    
+        folium.GeoJson(
+        gdf,
+        style_function=lambda f: {
+            'fillColor': get_cor(f['properties'].get('nome_zona', '')),
+            'fillOpacity': 0.5,
+            'color': 'white',
+            'weight': 3
+        },
+        tooltip=folium.GeoJsonTooltip(
+            fields=['nome_zona'],
+            aliases=['Zona:']
+        )
+    ).add_to(m)
+    
+    st_folium(m, width=1400, height=800)
     
     st.markdown("---")
     st.markdown("### Divisão por Zonas")
@@ -85,4 +89,4 @@ else:
     c4.markdown('<div style="background:#64B5F6;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">CENTRO</div>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("Mapa Estático - Município do Rio de Janeiro")
+st.caption("Mapa do Município do Rio de Janeiro com OpenStreetMap")
