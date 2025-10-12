@@ -44,24 +44,27 @@ else:
     
     m = folium.Map(
         location=c,
-        zoom_start=11,
-        tiles='OpenStreetMap',
+        zoom_start=10.5,
+        tiles='CartoDB positron',
         dragging=False,
         scrollWheelZoom=False,
         zoomControl=False,
         doubleClickZoom=False,
-        attributionControl=False
+        attributionControl=False,
+        max_bounds=True
     )
     
-    m.fit_bounds([[b[1], b[0]], [b[3], b[2]]])
+    margem = 0.01
+    m.fit_bounds([[b[1] - margem, b[0] - margem], [b[3] + margem, b[2] + margem]])
     
     folium.GeoJson(
         dados,
         style_function=lambda x: {
             'fillColor': cor(x['properties']['taxa']),
-            'fillOpacity': 0.65,
-            'color': 'white',
-            'weight': 2
+            'fillOpacity': 0.85,
+            'color': '#666666',
+            'weight': 1.5,
+            'dashArray': '0'
         },
         tooltip=folium.GeoJsonTooltip(
             fields=['zona', 'taxa'],
