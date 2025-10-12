@@ -60,31 +60,45 @@ gdf = load_data()
 if gdf is None:
     st.error("Não foi possível carregar os dados geográficos")
 else:
+    bounds = gdf.total_bounds
+    centro = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
+    
     mapa = folium.Map(
-        location=[-22.9068, -43.1729],
-        zoom_start=11,
-        tiles='CartoDB positron',
+        location=centro,
+        zoom_start=10,
+        tiles=None,
         dragging=False,
         scrollWheelZoom=False,
         zoomControl=False,
-        doubleClickZoom=False
+        doubleClickZoom=False,
+        attributionControl=False
     )
     
-    folium.GeoJson(
+    folium.TileLayer(
+        tiles='https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+        attr='CartoDB',
+        name='CartoDB Positron No Labels',
+        overlay=False,
+        control=False
+    ).add_to(mapa)
+    
+    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
+    
+        folium.GeoJson(
         gdf,
         style_function=lambda feature: {
             'fillColor': get_color(feature['properties']['taxa_criminalidade']),
-            'fillOpacity': 0.8,
+            'fillOpacity': 0.9,
             'color': 'white',
-            'weight': 1.5,
+                'weight': 2,
             'dashArray': '0'
         },
         tooltip=folium.GeoJsonTooltip(
             fields=['nome_bairro', 'taxa_criminalidade'],
             aliases=['Área:', 'Taxa:'],
             sticky=True
-        )
-    ).add_to(mapa)
+            )
+        ).add_to(mapa)
     
     st_folium(mapa, width=1200, height=700, returned_objects=[])
     
@@ -92,11 +106,11 @@ else:
     st.markdown("### Legenda de Criminalidade")
     
     col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
+
+with col1:
         st.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Baixa</div>', unsafe_allow_html=True)
-    
-    with col2:
+
+with col2:
         st.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Média</div>', unsafe_allow_html=True)
     
     with col3:
