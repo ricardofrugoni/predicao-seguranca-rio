@@ -79,3 +79,4 @@ if __name__ == "__main__":
     else:
         print("\n❌ Download falhou. Mantenha o GeoJSON simplificado atual.")
 
+

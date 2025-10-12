@@ -164,3 +164,4 @@ for feature in geojson_municipio['features']:
     nivel = feature['properties']['nivel']
     print(f"  • {nome}: {nivel}")
 
+

@@ -135,3 +135,4 @@ print(f"📁 Arquivo: {output_path}")
 print(f"📊 Total de bairros/subdivisões: {len(features_bairros)}")
 print(f"\nOs bairros agora seguem o formato REAL do município!")
 
+

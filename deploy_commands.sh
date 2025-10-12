@@ -91,3 +91,4 @@ echo "✅ Configuração local concluída!"
 echo "💡 Siga as instruções acima para completar o deploy"
 echo
 
+

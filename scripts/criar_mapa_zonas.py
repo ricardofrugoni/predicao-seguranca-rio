@@ -147,3 +147,4 @@ if __name__ == "__main__":
     print("✅ limite_municipal_rio.geojson - Limite do município")
     print("✅ zonas_rio.geojson - 4 zonas principais")
 
+

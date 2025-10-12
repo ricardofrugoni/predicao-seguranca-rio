@@ -111,3 +111,4 @@ else:
     print("  • Usando os dados locais das 4 zonas principais")
     print("  • Ou fazer download manual em: https://www.data.rio")
 
+

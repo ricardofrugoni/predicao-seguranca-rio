@@ -51,3 +51,4 @@ gdf_final.to_file(output_path, driver='GeoJSON')
 print(f"\n✅ Arquivo salvo: {output_path}")
 print(f"📊 {len(gdf_final)} bairros com dados de criminalidade")
 
+
