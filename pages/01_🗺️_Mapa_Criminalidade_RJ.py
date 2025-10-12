@@ -44,8 +44,10 @@ if not image_loaded:
     
     def carregar_bairros():
         paths = [
+            Path(__file__).parent.parent / "data" / "shapefiles" / "bairros_rio_oficial.geojson",
+            Path("data/shapefiles/bairros_rio_oficial.geojson"),
             Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_limites_reais.geojson",
-            Path("data/shapefiles/zonas_rio_limites_reais.geojson",
+            Path("data/shapefiles/zonas_rio_limites_reais.geojson"),
             Path(__file__).parent.parent / "data" / "shapefiles" / "municipio_rio_zonas_real.geojson",
             Path("data/shapefiles/municipio_rio_zonas_real.geojson")
         ]
@@ -80,8 +82,15 @@ if not image_loaded:
         ax.set_xlim([gdf.total_bounds[0] - 0.02, gdf.total_bounds[2] + 0.02])
         ax.set_ylim([gdf.total_bounds[1] - 0.02, gdf.total_bounds[3] + 0.02])
         
+        if len(gdf) > 20:
+            titulo = f'Shapefile dos {len(gdf)} bairros da cidade do Rio de Janeiro'
+        elif len(gdf) > 4:
+            titulo = f'Mapa com {len(gdf)} divisões do município do Rio de Janeiro'
+        else:
+            titulo = f'Mapa das {len(gdf)} zonas principais do Rio de Janeiro'
+        
         ax.set_title(
-            f'Shapefile das {len(gdf)} zonas da cidade do Rio de Janeiro',
+            titulo,
             fontsize=16,
             weight='bold',
             pad=20,
