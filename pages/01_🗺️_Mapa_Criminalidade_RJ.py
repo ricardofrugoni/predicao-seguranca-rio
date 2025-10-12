@@ -64,15 +64,17 @@ else:
     bounds = gdf.total_bounds
     centro = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     
-    mapa = folium.Map(location=centro, zoom_start=11, tiles='OpenStreetMap', dragging=False, scrollWheelZoom=False, zoomControl=False, doubleClickZoom=False, attributionControl=False)
+    mapa = folium.Map(location=centro, zoom_start=11, tiles=None, dragging=False, scrollWheelZoom=False, zoomControl=False, doubleClickZoom=False, attributionControl=False)
+    
+    folium.TileLayer(tiles='OpenStreetMap', name='Base', overlay=False, control=False, opacity=0.3, attr='OpenStreetMap').add_to(mapa)
     
     mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     
-        folium.GeoJson(
+    folium.GeoJson(
         gdf,
         style_function=lambda feature: {
             'fillColor': get_cor_crime(feature['properties'].get('taxa', 50)),
-            'fillOpacity': 0.7,
+            'fillOpacity': 1.0,
             'color': 'white',
             'weight': 3
         },
@@ -90,8 +92,8 @@ else:
                 font-size: 14px;
                 padding: 10px;
             """
-            )
-        ).add_to(mapa)
+        )
+    ).add_to(mapa)
     
     st_folium(mapa, width=1400, height=800)
     
@@ -121,4 +123,4 @@ else:
             c4.metric("Homicídios", f"{int(row.get('homicidio', 0)):,}")
 
 st.markdown("---")
-st.caption("Dados simulados baseados em estatísticas do ISP-RJ | Mapa OpenStreetMap")
+st.caption("Dados simulados baseados em estatísticas do ISP-RJ | Apenas o Município do Rio de Janeiro")
