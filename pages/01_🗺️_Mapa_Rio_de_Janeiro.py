@@ -11,7 +11,7 @@ st.title("🗺️ Mapa do Município do Rio de Janeiro")
 def carregar_mapa():
     caminhos = [
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_limites_reais.geojson",
-        Path("data/shapefiles/zonas_rio_limites_reais.geojson"
+        Path("data/shapefiles/zonas_rio_limites_reais.geojson")
     ]
     for caminho in caminhos:
         if caminho.exists():
