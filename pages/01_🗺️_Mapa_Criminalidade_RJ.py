@@ -58,7 +58,7 @@ def get_color(valor_criminalidade):
 gdf = load_data()
 
 if gdf is None:
-    st.error("❌ Não foi possível carregar os dados geográficos")
+    st.error("Não foi possível carregar os dados geográficos")
 else:
     mapa = folium.Map(
         location=[-22.9068, -43.1729],
@@ -70,7 +70,7 @@ else:
         doubleClickZoom=False
     )
     
-        folium.GeoJson(
+    folium.GeoJson(
         gdf,
         style_function=lambda feature: {
             'fillColor': get_color(feature['properties']['taxa_criminalidade']),
@@ -83,36 +83,36 @@ else:
             fields=['nome_bairro', 'taxa_criminalidade'],
             aliases=['Área:', 'Taxa:'],
             sticky=True
-            )
-        ).add_to(mapa)
+        )
+    ).add_to(mapa)
     
     st_folium(mapa, width=1200, height=700, returned_objects=[])
     
     st.markdown("---")
-    st.markdown("### 📊 Legenda de Criminalidade")
+    st.markdown("### Legenda de Criminalidade")
     
     col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-        st.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">🟢 BAIXA<br><small>&lt; 20</small></div>', unsafe_allow_html=True)
-
-with col2:
-        st.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">🟡 MÉDIA<br><small>20 - 40</small></div>', unsafe_allow_html=True)
+    
+    with col1:
+        st.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Baixa</div>', unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Média</div>', unsafe_allow_html=True)
     
     with col3:
-        st.markdown('<div style="background:#e67e22;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">🟠 ALTA<br><small>40 - 60</small></div>', unsafe_allow_html=True)
+        st.markdown('<div style="background:#e67e22;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Alta</div>', unsafe_allow_html=True)
     
     with col4:
-        st.markdown('<div style="background:#e74c3c;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">🔴 MUITO ALTA<br><small>&gt; 60</small></div>', unsafe_allow_html=True)
+        st.markdown('<div style="background:#e74c3c;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Muito Alta</div>', unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("### 📈 Dados por Área")
+    st.markdown("### Dados por Área")
     
     for idx, row in gdf.iterrows():
         nome = row['nome_bairro']
         taxa = row['taxa_criminalidade']
         cor = get_color(taxa)
-        st.markdown(f'<div style="background:{cor};padding:10px;margin:5px 0;border-radius:5px;color:white;font-weight:bold;display:flex;justify-content:space-between;"><span>{nome}</span><span>Taxa: {taxa}</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div style="background:{cor};padding:10px;margin:5px 0;border-radius:5px;color:white;font-weight:bold;"><b>{nome}</b> - Taxa: {taxa}</div>', unsafe_allow_html=True)
 
 st.markdown("---")
 st.caption("Mapa de Criminalidade - Município do Rio de Janeiro")
