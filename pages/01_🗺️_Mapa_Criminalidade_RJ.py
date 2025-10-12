@@ -22,10 +22,12 @@ ESCALA_CORES = {
 
 def carregar_dados_geoespaciais():
     caminhos_possiveis = [
+        Path(__file__).parent.parent / "data" / "shapefiles" / "municipio_rio_zonas_real.geojson",
+        Path("data/shapefiles/municipio_rio_zonas_real.geojson"),
+        Path(__file__).parent.parent / "data" / "shapefiles" / "municipio_rio_bairros.geojson",
+        Path("data/shapefiles/municipio_rio_bairros.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "areas_detalhadas_rio.geojson",
-        Path("data/shapefiles/areas_detalhadas_rio.geojson"),
-        Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
-        Path("data/shapefiles/zonas_rio.geojson")
+        Path("data/shapefiles/areas_detalhadas_rio.geojson")
     ]
     for caminho in caminhos_possiveis:
         try:
@@ -127,7 +129,7 @@ with col_info:
     for nivel, cor in ESCALA_CORES.items():
         html = f'<div style="background:{cor};color:white;padding:10px;margin:6px 0;border-radius:4px;text-align:center;font-weight:bold;font-size:13px;box-shadow:0 2px 4px rgba(0,0,0,0.1);">{nivel}</div>'
         st.markdown(html, unsafe_allow_html=True)
-    st.markdown("---")
+st.markdown("---")
     st.markdown("#### 📊 Tecnologias")
     st.code("• GeoPandas\n• Folium\n• Streamlit\n• Shapely")
 
