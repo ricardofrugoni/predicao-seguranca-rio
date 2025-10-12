@@ -4,8 +4,8 @@ from streamlit_folium import st_folium
 import geopandas as gpd
 from pathlib import Path
 
-st.set_page_config(page_title="Mapa Criminalidade", page_icon="🗺️", layout="wide")
-st.title("🗺️ Mapa de Criminalidade - Rio de Janeiro")
+st.set_page_config(page_title="Mapa Rio de Janeiro", page_icon="🗺️", layout="wide")
+st.title("🗺️ Mapa do Município do Rio de Janeiro")
 
 @st.cache_data
 def load_data():
@@ -20,28 +20,27 @@ def load_data():
             if p.exists():
                 gdf = gpd.read_file(p)
                 if not gdf.empty:
-                    nivel_map = {"Muito Baixo": 15, "Baixo": 25, "Médio": 45, "Alto": 65, "Muito Alto": 85}
-                    if 'nivel' in gdf.columns:
-                        gdf['taxa_criminalidade'] = gdf['nivel'].map(nivel_map)
-                    else:
-                        gdf['taxa_criminalidade'] = 50
                     if 'nome' in gdf.columns:
-                        gdf['nome_bairro'] = gdf['nome']
+                        gdf['nome_zona'] = gdf['nome']
                     else:
-                        gdf['nome_bairro'] = [f'Zona {i+1}' for i in range(len(gdf))]
+                        gdf['nome_zona'] = [f'Zona {i+1}' for i in range(len(gdf))]
                     return gdf
         except:
             continue
     return None
 
-def get_color(val):
-    if val < 20:
-        return '#2ecc71'
-    elif val < 40:
-        return '#f1c40f'
-    elif val < 60:
-        return '#e67e22'
-    return '#e74c3c'
+cores_zonas = {
+    'Zona Norte': '#E57373',
+    'Zona Sul': '#FFD54F',
+    'Zona Oeste': '#81C784',
+    'Centro': '#64B5F6'
+}
+
+def get_cor_zona(nome):
+    for key in cores_zonas:
+        if key.lower() in nome.lower():
+            return cores_zonas[key]
+    return '#90A4AE'
 
 gdf = load_data()
 
@@ -54,7 +53,7 @@ else:
     m = folium.Map(
         location=center,
         zoom_start=10,
-        tiles=None,
+        tiles='CartoDB positron',
         dragging=False,
         scrollWheelZoom=False,
         zoomControl=False,
@@ -62,36 +61,32 @@ else:
         attributionControl=False
     )
     
-    folium.TileLayer(
-        tiles='https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
-        attr='CartoDB',
-        overlay=False,
-        control=False
-    ).add_to(m)
-    
     m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     
-    folium.GeoJson(
+        folium.GeoJson(
         gdf,
         style_function=lambda f: {
-            'fillColor': get_color(f['properties']['taxa_criminalidade']),
-            'fillOpacity': 0.9,
+            'fillColor': get_cor_zona(f['properties'].get('nome_zona', '')),
+            'fillOpacity': 0.7,
             'color': 'white',
-            'weight': 2
+            'weight': 3
         },
         tooltip=folium.GeoJsonTooltip(
-            fields=['nome_bairro', 'taxa_criminalidade'],
-            aliases=['Área:', 'Taxa:']
+            fields=['nome_zona'],
+            aliases=['Zona:']
         )
     ).add_to(m)
     
     st_folium(m, width=1200, height=700)
     
     st.markdown("---")
-    st.markdown("### Legenda")
+    st.markdown("### Divisão por Zonas")
     
     c1, c2, c3, c4 = st.columns(4)
-    c1.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Baixa</div>', unsafe_allow_html=True)
-    c2.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Média</div>', unsafe_allow_html=True)
-    c3.markdown('<div style="background:#e67e22;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Alta</div>', unsafe_allow_html=True)
-    c4.markdown('<div style="background:#e74c3c;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Muito Alta</div>', unsafe_allow_html=True)
+    c1.markdown('<div style="background:#E57373;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">ZONA NORTE</div>', unsafe_allow_html=True)
+    c2.markdown('<div style="background:#FFD54F;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">ZONA SUL</div>', unsafe_allow_html=True)
+    c3.markdown('<div style="background:#81C784;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">ZONA OESTE</div>', unsafe_allow_html=True)
+    c4.markdown('<div style="background:#64B5F6;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">CENTRO</div>', unsafe_allow_html=True)
+
+st.markdown("---")
+st.caption("Mapa das Zonas do Município do Rio de Janeiro")
