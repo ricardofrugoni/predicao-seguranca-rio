@@ -522,82 +522,129 @@ def obter_cor_criminalidade(nivel):
 
 def criar_mapa_criminalidade():
     """
-    Cria mapa focado APENAS no município do Rio de Janeiro
+    Cria mapa choropleth SIMPLES com regiões administrativas pintadas por cor de violência
     NOTA: Não usa @st.cache_data porque mapas Folium não podem ser cacheados
     """
     
     # Coordenadas do centro do município do Rio de Janeiro
     RIO_CENTER = [-22.9068, -43.1729]
     
-    # Criar mapa centralizado no Rio com zoom apropriado para o município
+    # Limites geográficos do município para impedir navegação fora dele
+    RIO_BOUNDS = [
+        [-23.083, -43.796],  # Sudoeste
+        [-22.746, -43.097]   # Nordeste
+    ]
+    
+    # Criar mapa SIMPLES E LIMPO
     mapa = folium.Map(
         location=RIO_CENTER,
-        zoom_start=11,  # Zoom focado no município (não no estado)
-        tiles='OpenStreetMap',
-        max_bounds=True,  # Limita o pan do mapa
-        min_zoom=10,      # Impede zoom out demais
-        max_zoom=18       # Permite zoom in para detalhes
+        zoom_start=11,
+        tiles='CartoDB positron',  # Fundo limpo e minimalista
+        max_bounds=True,
+        min_zoom=10,
+        max_zoom=16
     )
     
-    # Obter GeoJSON - APENAS das 33 RAs do município do Rio de Janeiro
+    # Obter GeoJSON das 33 RAs
     geojson_data = criar_geojson_rio_municipio()
     
-    # FILTRAR apenas dados do município do Rio (33 Regiões Administrativas)
-    # dados_ras já contém APENAS as RAs do município (não inclui Baixada, Niterói, etc.)
+    # Preparar dados para coloração por nível de criminalidade
+    df_mapa = pd.DataFrame([
+        {
+            'ra_id': ra_id,
+            'nome': dados['nome'],
+            'taxa': dados['taxa_100k'],
+            'nivel': dados['nivel'],
+            'cor': obter_cor_criminalidade(dados['nivel']),
+            'crimes': dados['crimes'],
+            'populacao': dados['pop']
+        }
+        for ra_id, dados in dados_ras.items()
+    ])
     
-    # Adicionar camada choropleth
-    folium.Choropleth(
-        geo_data=geojson_data,
-        name='Criminalidade por Região Administrativa',
-        data=pd.DataFrame([(ra_id, dados['taxa_100k']) for ra_id, dados in dados_ras.items()], 
-                         columns=['ra_id', 'taxa']),
-        columns=['ra_id', 'taxa'],
-        key_on='feature.id',
-        fill_color='YlOrRd',
-        fill_opacity=0.7,
-        line_opacity=0.8,
-        legend_name='Taxa de Crimes por 100k habitantes',
-        highlight=True
-    ).add_to(mapa)
-    
-    # Adicionar marcadores com informações
+    # Adicionar cada região com sua cor específica
     for feature in geojson_data['features']:
         ra_id = int(feature['id'])
         dados = dados_ras[ra_id]
+        cor = obter_cor_criminalidade(dados['nivel'])
         
-        # Calcular centroide aproximado
-        coords = feature['geometry']['coordinates'][0]
-        lats = [c[1] for c in coords]
-        lons = [c[0] for c in coords]
-        centroid_lat = sum(lats) / len(lats)
-        centroid_lon = sum(lons) / len(lons)
-        
-        # Criar popup com informações
-        popup_html = f"""
-        <div style="font-family: Arial; width: 250px;">
-            <h4 style="margin: 0; color: #2c3e50;">{dados['nome']}</h4>
-            <hr style="margin: 5px 0;">
-            <b>Zona:</b> {dados['zona']}<br>
-            <b>População:</b> {dados['pop']:,}<br>
-            <b>Crimes (ano):</b> {dados['crimes']:,}<br>
-            <b>Taxa/100k hab:</b> {dados['taxa_100k']}<br>
-            <hr style="margin: 5px 0;">
-            <b>Nível:</b> <span style="color: {obter_cor_criminalidade(dados['nivel'])}; 
-                                      font-weight: bold;">{dados['nivel']}</span>
-        </div>
-        """
-        
-        folium.Marker(
-            location=[centroid_lat, centroid_lon],
-            popup=folium.Popup(popup_html, max_width=300),
-            icon=folium.DivIcon(html=f"""
-                <div style="font-size: 10px; color: #2c3e50; font-weight: bold; 
-                            background-color: white; padding: 2px 5px; border-radius: 3px;
-                            border: 1px solid #7f8c8d;">
-                    {dados['nome']}
-                </div>
-            """)
+        # Criar GeoJson para cada região individualmente com sua cor
+        folium.GeoJson(
+            feature,
+            style_function=lambda x, cor=cor: {
+                'fillColor': cor,
+                'color': '#000000',  # Borda preta
+                'weight': 2,
+                'fillOpacity': 0.7
+            },
+            highlight_function=lambda x: {
+                'weight': 3,
+                'fillOpacity': 0.9
+            },
+            tooltip=folium.Tooltip(
+                f"<b>{dados['nome']}</b><br>"
+                f"Nível: {dados['nivel']}<br>"
+                f"Taxa: {dados['taxa_100k']:.1f}/100k hab<br>"
+                f"Crimes: {dados['crimes']:,}"
+            )
         ).add_to(mapa)
+    
+    # Adicionar legenda customizada (cores do Casa Fluminense)
+    legenda_html = """
+    <div style="position: fixed; 
+                bottom: 50px; right: 50px; width: 200px; height: auto; 
+                background-color: white; z-index:9999; font-size:14px;
+                border:2px solid grey; border-radius: 5px; padding: 10px">
+        <p style="margin-top:0; font-weight: bold; text-align: center;">
+            Nível de Criminalidade
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #2ecc71; width: 30px; height: 15px; 
+               float: left; margin-right: 8px; border: 1px solid black;"></i>
+            Muito Baixo
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #f39c12; width: 30px; height: 15px; 
+               float: left; margin-right: 8px; border: 1px solid black;"></i>
+            Baixo
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #e67e22; width: 30px; height: 15px; 
+               float: left; margin-right: 8px; border: 1px solid black;"></i>
+            Médio
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #e74c3c; width: 30px; height: 15px; 
+               float: left; margin-right: 8px; border: 1px solid black;"></i>
+            Alto
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #c0392b; width: 30px; height: 15px; 
+               float: left; margin-right: 8px; border: 1px solid black;"></i>
+            Muito Alto
+        </p>
+    </div>
+    """
+    mapa.get_root().html.add_child(folium.Element(legenda_html))
+    
+    # Adicionar script para limitar navegação ao município
+    from folium import Element
+    bounds_script = Element(f"""
+        <script>
+        setTimeout(function(){{
+            var bounds = L.latLngBounds(
+                L.latLng({RIO_BOUNDS[0][0]}, {RIO_BOUNDS[0][1]}),
+                L.latLng({RIO_BOUNDS[1][0]}, {RIO_BOUNDS[1][1]})
+            );
+            map.setMaxBounds(bounds);
+            map.fitBounds(bounds);
+            map.on('drag', function() {{
+                map.panInsideBounds(bounds, {{ animate: false }});
+            }});
+        }}, 100);
+        </script>
+    """)
+    mapa.get_root().html.add_child(bounds_script)
     
     return mapa
 
