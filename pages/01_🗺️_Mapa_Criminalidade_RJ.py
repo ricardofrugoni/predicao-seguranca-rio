@@ -29,17 +29,12 @@ def load_data():
             continue
     return None
 
-    cores = {
-    'Zona Norte': '#E57373',
-    'Zona Sul': '#FFD54F',
-    'Zona Oeste': '#81C784',
-    'Centro': '#64B5F6'
-}
+cores_zonas = {'Zona Norte': '#E57373', 'Zona Sul': '#FFD54F', 'Zona Oeste': '#81C784', 'Centro': '#64B5F6'}
 
-def get_cor(nome):
-    for key in cores:
-        if key.lower() in nome.lower():
-            return cores[key]
+def get_cor_zona(nome):
+    for chave in cores_zonas:
+        if chave.lower() in nome.lower():
+            return cores_zonas[chave]
     return '#B0BEC5'
 
 gdf = load_data()
@@ -48,36 +43,15 @@ if gdf is None:
     st.error("Dados não encontrados")
 else:
     bounds = gdf.total_bounds
-    center = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
+    centro = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     
-    m = folium.Map(
-        location=center,
-        zoom_start=11,
-        tiles='OpenStreetMap',
-        dragging=False,
-        scrollWheelZoom=False,
-        zoomControl=False,
-        doubleClickZoom=False,
-        attributionControl=False
-    )
+    mapa = folium.Map(location=centro, zoom_start=11, tiles='OpenStreetMap', dragging=False, scrollWheelZoom=False, zoomControl=False, doubleClickZoom=False, attributionControl=False)
     
-    m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
+    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     
-        folium.GeoJson(
-        gdf,
-        style_function=lambda f: {
-            'fillColor': get_cor(f['properties'].get('nome_zona', '')),
-            'fillOpacity': 0.5,
-            'color': 'white',
-            'weight': 3
-        },
-        tooltip=folium.GeoJsonTooltip(
-            fields=['nome_zona'],
-            aliases=['Zona:']
-        )
-    ).add_to(m)
+    folium.GeoJson(gdf, style_function=lambda feature: {'fillColor': get_cor_zona(feature['properties'].get('nome_zona', '')), 'fillOpacity': 0.5, 'color': 'white', 'weight': 3}, tooltip=folium.GeoJsonTooltip(fields=['nome_zona'], aliases=['Zona:'])).add_to(mapa)
     
-    st_folium(m, width=1400, height=800)
+    st_folium(mapa, width=1400, height=800)
     
     st.markdown("---")
     st.markdown("### Divisão por Zonas")
@@ -89,4 +63,4 @@ else:
     c4.markdown('<div style="background:#64B5F6;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">CENTRO</div>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("Mapa do Município do Rio de Janeiro com OpenStreetMap")
+st.caption("Mapa do Rio de Janeiro com OpenStreetMap")
