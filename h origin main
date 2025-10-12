@@ -1,0 +1,5 @@
+[33m9cc90df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m  Adicionar GeoJSON com 27 áreas detalhadas do município
+[33m3db7f04[m  Mapa detalhado do município com 27 áreas - GeoJSON com divisões mais detalhadas (bairros principais) - Cores por nível de criminalidade - Polígonos seguindo limites aproximados reais - Apenas município do Rio, sem vizinhos - Script para buscar dados oficiais
+[33me3910fd[m  Adicionar GeoJSON realista e limite municipal - zonas_rio_realista.geojson (polígonos não-retangulares) - limite_municipal_ibge.geojson (IBGE oficial)
+[33md431d28[m  Mapa melhorado com polígonos mais realistas - GeoJSON com formas não-retangulares das zonas - Limite municipal do IBGE como referência - Restrições de visualização ao município - Zoom e bounds ajustados - Prioridade para zonas_rio_realista.geojson
+[33m614a9f8[m  Adicionar arquivos GeoJSON ao repositório - zonas_rio.geojson (4 zonas do município) - limite_municipal_rio.geojson (IBGE) - regioes_administrativas_rio.geojson (33 RAs) Necessários para o mapa choropleth funcionar no Streamlit Cloud
