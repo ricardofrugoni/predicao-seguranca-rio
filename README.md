@@ -13,9 +13,9 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 ## 🚀 Características Principais
 
 - **8 Modelos Preditivos**: ARIMA, SARIMA, Prophet, XGBoost, Random Forest, LSTM, Gradient Boosting, Ensemble
-- **Análises Espaciais Avançadas**: Moran's I, LISA, Kernel Density, GWR
+- **Análise Temporal Avançada**: Séries temporais, tendências e sazonalidade
 - **Interface Interativa**: Dashboard Streamlit profissional
-- **Arquitetura Híbrida**: Python + R otimizada
+- **Visualizações Dinâmicas**: Gráficos Plotly interativos
 - **Cache Inteligente**: Performance máxima
 - **Deploy Fácil**: Streamlit Cloud compatível
 
@@ -25,8 +25,8 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 |------------|--------|-----------|
 | 🏠 Dashboard Principal | ✅ Funcionando | Interface Streamlit completa |
 | 🤖 Modelos ML | ✅ Funcionando | 8 modelos implementados |
-| 🗺️ Análises Espaciais | ✅ Funcionando | Integração Python + R |
-| 📈 Visualizações | ✅ Funcionando | Plotly + Folium interativos |
+| 📈 Análise Temporal | ✅ Funcionando | Gráficos e séries temporais |
+| 🔍 Visualizações | ✅ Funcionando | Plotly interativos |
 | 🚀 Deploy | ✅ Online | Streamlit Cloud ativo |
 | 📚 Documentação | ✅ Completa | README + guias detalhados |
 
@@ -39,13 +39,8 @@ Sistema completo de análise preditiva de violência no município do Rio de Jan
 - **Scikit-learn** - Machine Learning
 - **TensorFlow/Keras** - Deep Learning
 - **Statsmodels** - Séries temporais
-- **Geopandas** - Análise geoespacial
-
-### 📊 R
-- **spdep** - Análise de dependência espacial
-- **spatstat** - Estatística espacial
-- **sf** - Manipulação de dados geoespaciais
-- **forecast** - Séries temporais avançadas
+- **Prophet** - Previsão de séries temporais (Facebook)
+- **XGBoost** - Gradient Boosting otimizado
 
 ### ☁️ Deploy
 - **Streamlit Cloud** - Hospedagem gratuita
@@ -87,30 +82,7 @@ pip install -r requirements_hibrido.txt
 ```
 **Tempo estimado**: 5-10 minutos
 
-### Passo 4: Instale R (Opcional - para análises espaciais)
-
-**Windows:**
-- Baixe de: https://cran.r-project.org/bin/windows/base/
-- Instale RTools: https://cran.r-project.org/bin/windows/Rtools/
-
-**Linux (Ubuntu/Debian):**
-```bash
-sudo apt-get update
-sudo apt-get install r-base r-base-dev
-```
-
-**Mac:**
-```bash
-brew install r
-```
-
-**Pacotes R:**
-```r
-# Abra R e execute:
-install.packages(c("forecast", "sf", "spdep", "spatstat", "jsonlite"))
-```
-
-### Passo 5: Verificar Instalação
+### Passo 4: Verificar Instalação
 ```bash
 python -c "import streamlit, pandas, tensorflow, xgboost; print('✅ Tudo OK!')"
 ```
@@ -123,13 +95,8 @@ seguranca-rio-analise-preditiva/
 ├── Home.py                          # 🏠 Página principal do Streamlit
 │
 ├── pages/                           # 📑 Páginas do dashboard
-│   ├── 01_🗺️_Mapa_Interativo.py
-│   ├── 02_📈_Análise_Temporal.py
-│   ├── 03_📍_Análise_Espacial_R.py
-│   ├── 04_🔥_Hotspots_e_Clusters.py
-│   ├── 05_🤖_Modelos_Preditivos.py   # ⭐ 8 modelos ML
-│   ├── 06_📊_Comparações.py
-│   └── 07_📄_Relatórios.py
+│   ├── 02_📈_Análise_Temporal.py    # Séries temporais e tendências
+│   └── 05_🤖_Modelos_Preditivos.py  # ⭐ 8 modelos ML
 │
 ├── src/
 │   ├── r_scripts/                   # Scripts R
