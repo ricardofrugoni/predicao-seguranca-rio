@@ -62,7 +62,7 @@ else:
     m = folium.Map(
         location=centro,
         zoom_start=11,
-        tiles=None,
+        tiles='CartoDB positron',
         dragging=False,
         scrollWheelZoom=False,
         zoomControl=False,
@@ -70,22 +70,16 @@ else:
         attributionControl=False
     )
     
-    folium.TileLayer(
-        tiles='OpenStreetMap',
-        overlay=False,
-        control=False,
-        opacity=0.3
-    ).add_to(m)
-    
     m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     
-    folium.GeoJson(
+        folium.GeoJson(
         gdf,
         style_function=lambda f: {
             'fillColor': get_cor(f['properties'].get('taxa', 50)),
-            'fillOpacity': 1.0,
+            'fillOpacity': 0.85,
             'color': 'white',
-            'weight': 3
+                'weight': 3,
+            'dashArray': '0'
         },
         tooltip=folium.GeoJsonTooltip(
             fields=['nome_zona', 'total', 'roubo', 'furto', 'homicidio', 'trafico', 'taxa'],
@@ -112,12 +106,14 @@ else:
         nome = row['nome_zona']
         taxa = row.get('taxa', 0)
         total = row.get('total', 0)
+        cor = get_cor(taxa)
         with st.expander(f"📍 {nome} - Taxa: {taxa}/100k hab"):
             d1, d2, d3, d4 = st.columns(4)
             d1.metric("Total", f"{int(total):,}")
             d2.metric("Roubos", f"{int(row.get('roubo', 0)):,}")
             d3.metric("Furtos", f"{int(row.get('furto', 0)):,}")
             d4.metric("Homicídios", f"{int(row.get('homicidio', 0)):,}")
+            st.markdown(f'<div style="background:{cor};padding:10px;border-radius:5px;color:white;text-align:center;font-weight:bold;margin-top:10px;">Nível: {taxa}/100k hab</div>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("Dados simulados - ISP-RJ | Município do Rio de Janeiro")
+st.caption("Dados simulados - ISP-RJ | As cores respeitam os limites geográficos das zonas")
