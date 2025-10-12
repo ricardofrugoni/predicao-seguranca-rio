@@ -21,7 +21,7 @@ def carregar_geojson():
     caminhos = [
         Path(__file__).parent.parent / "data" / "shapefiles" / "areas_detalhadas_rio.geojson",
         Path("data/shapefiles/areas_detalhadas_rio.geojson"),
-        Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson",
+        Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
         Path("data/shapefiles/zonas_rio.geojson")
     ]
