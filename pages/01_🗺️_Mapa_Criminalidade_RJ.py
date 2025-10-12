@@ -37,7 +37,7 @@ def carregar_geojson():
     caminhos = [
         Path(__file__).parent.parent / "data" / "shapefiles" / "areas_detalhadas_rio.geojson",
         Path("data/shapefiles/areas_detalhadas_rio.geojson"),
-        Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson",
+        Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_realista.geojson",
         Path("data/shapefiles/zonas_rio_realista.geojson"),
     ]
@@ -55,7 +55,7 @@ def carregar_limite_municipal():
     """Carrega limite do município"""
     caminhos = [
         Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_ibge.geojson",
-        Path("data/shapefiles/limite_municipal_ibge.geojson",
+        Path("data/shapefiles/limite_municipal_ibge.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_rio.geojson",
         Path("data/shapefiles/limite_municipal_rio.geojson"),
     ]
@@ -166,7 +166,7 @@ with col1:
     
     mapa = criar_mapa()
     if mapa:
-        folium_static(mapa, width=900, height=600)
+    folium_static(mapa, width=900, height=600)
     else:
         st.error("Erro ao carregar o mapa")
         st.code("python scripts/buscar_dados_oficiais_rio.py")
