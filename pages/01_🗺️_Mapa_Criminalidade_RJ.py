@@ -74,12 +74,15 @@ for zona, dados in dados_zonas.items():
 def criar_mapa_choropleth():
     """Cria mapa choropleth com as 4 zonas do Rio de Janeiro"""
     
-    # Carregar GeoJSON das zonas
+    # Carregar GeoJSON das zonas (versão realista)
     # Tenta múltiplos caminhos possíveis
     possiveis_caminhos = [
+        Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_realista.geojson",
+        Path("data/shapefiles/zonas_rio_realista.geojson"),
+        Path("projeto_violencia_rj/data/shapefiles/zonas_rio_realista.geojson"),
+        # Fallback para versão anterior
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
         Path("data/shapefiles/zonas_rio.geojson"),
-        Path("projeto_violencia_rj/data/shapefiles/zonas_rio.geojson"),
     ]
     
     geojson_zonas = None
@@ -110,6 +113,24 @@ def criar_mapa_choropleth():
     # Debug: mostrar qual arquivo foi carregado
     # st.success(f"✅ GeoJSON carregado de: {caminho_usado}")
     
+    # Tentar carregar limite municipal para máscara
+    limite_municipal = None
+    caminhos_limite = [
+        Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_ibge.geojson",
+        Path("data/shapefiles/limite_municipal_ibge.geojson"),
+        Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_rio.geojson",
+        Path("data/shapefiles/limite_municipal_rio.geojson"),
+    ]
+    
+    for caminho in caminhos_limite:
+        try:
+            if caminho.exists():
+                with open(caminho, 'r', encoding='utf-8') as f:
+                    limite_municipal = json.load(f)
+                break
+        except:
+            continue
+    
     # Preparar DataFrame para o choropleth
     df_mapa = pd.DataFrame([
         {
@@ -122,19 +143,38 @@ def criar_mapa_choropleth():
         for zona, dados in dados_zonas.items()
     ])
     
-    # Centro do Rio
-    RIO_CENTER = [-22.9068, -43.3729]
+    # Centro do Rio de Janeiro (ajustado)
+    RIO_CENTER = [-22.9068, -43.4200]
     
-    # Criar mapa base
+    # Criar mapa base com limites restritos ao município
     mapa = folium.Map(
         location=RIO_CENTER,
         zoom_start=10,
         tiles='CartoDB positron',
-        min_zoom=9,
-        max_zoom=13
+        min_zoom=10,
+        max_zoom=14,
+        max_bounds=True,
+        # Limites do município do Rio de Janeiro
+        min_lat=-23.090,
+        max_lat=-22.745,
+        min_lon=-43.800,
+        max_lon=-43.095
     )
     
-    # Adicionar Choropleth
+    # Adicionar limite municipal como fundo (se disponível)
+    if limite_municipal:
+        folium.GeoJson(
+            limite_municipal,
+            name='Limite Municipal',
+            style_function=lambda x: {
+                'fillColor': '#f0f0f0',
+                'color': '#333333',
+                'weight': 3,
+                'fillOpacity': 0.1
+            }
+        ).add_to(mapa)
+    
+    # Adicionar Choropleth das zonas
     folium.Choropleth(
         geo_data=geojson_zonas,
         name='choropleth',
