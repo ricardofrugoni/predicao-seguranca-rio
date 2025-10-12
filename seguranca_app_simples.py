@@ -36,8 +36,8 @@ def carregar_dados_seguranca():
     """Carrega dados simulados de segurança"""
     np.random.seed(42)
     
-    # Dados de crimes por região
-    regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói']
+    # Dados de crimes por região - APENAS MUNICÍPIO DO RIO DE JANEIRO
+    regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste']
     tipos_crime = ['Homicídio Doloso', 'Roubo a Transeunte', 'Furto a Transeunte', 'Violência Doméstica', 'Estupro']
     
     dados = []
@@ -56,8 +56,10 @@ def carregar_dados_seguranca():
             # Ajuste por região
             if regiao == 'Zona Sul':
                 base = int(base * 0.6)
-            elif regiao == 'Baixada Fluminense':
-                base = int(base * 1.8)
+            elif regiao == 'Zona Norte':
+                base = int(base * 1.3)
+            elif regiao == 'Zona Oeste':
+                base = int(base * 1.5)
             
             dados.append({
                 'regiao': regiao,
@@ -75,10 +77,8 @@ def calcular_indices_violencia(df):
     populacao = {
         'Centro': 450000,
         'Zona Sul': 380000,
-        'Zona Norte': 1200000,
-        'Zona Oeste': 850000,
-        'Baixada Fluminense': 2100000,
-        'Grande Niterói': 950000
+        'Zona Norte': 2400000,
+        'Zona Oeste': 2500000
     }
     
     # Agrupa por região
@@ -260,3 +260,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

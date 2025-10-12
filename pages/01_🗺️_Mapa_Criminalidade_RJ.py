@@ -84,12 +84,21 @@ for ra_id, dados in dados_ras.items():
 
 def criar_geojson_rio_municipio():
     """
-    Cria GeoJSON com polígonos das 33 RAs do município do Rio de Janeiro
-    Coordenadas aproximadas para visualização
+    Carrega GeoJSON com polígonos das 33 RAs do município do Rio de Janeiro
+    IMPORTANTE: APENAS município do Rio - exclui Baixada Fluminense, Niterói, etc.
     """
+    import json
+    from pathlib import Path
     
-    # GeoJSON com polígonos simplificados das RAs do município
-    # Cada RA tem um polígono que representa sua área geográfica aproximada
+    # Caminho para o arquivo GeoJSON real
+    geojson_path = Path(__file__).parent.parent / "data" / "shapefiles" / "regioes_administrativas_rio.geojson"
+    
+    # Se o arquivo existir, carrega ele
+    if geojson_path.exists():
+        with open(geojson_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    
+    # Caso contrário, usa geometrias simplificadas inline
     geojson = {
         "type": "FeatureCollection",
         "features": [
@@ -101,8 +110,8 @@ def criar_geojson_rio_municipio():
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-43.195, -22.945], [-43.175, -22.945], [-43.175, -22.960],
-                        [-43.195, -22.960], [-43.195, -22.945]
+                        [-43.195, -22.935], [-43.170, -22.935], [-43.165, -22.955],
+                        [-43.190, -22.960], [-43.195, -22.935]
                     ]]
                 }
             },
@@ -113,8 +122,8 @@ def criar_geojson_rio_municipio():
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-43.195, -22.960], [-43.175, -22.960], [-43.175, -22.980],
-                        [-43.195, -22.980], [-43.195, -22.960]
+                        [-43.190, -22.960], [-43.165, -22.955], [-43.170, -22.985],
+                        [-43.195, -22.985], [-43.190, -22.960]
                     ]]
                 }
             },
@@ -125,8 +134,8 @@ def criar_geojson_rio_municipio():
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-43.215, -22.960], [-43.195, -22.960], [-43.195, -22.980],
-                        [-43.215, -22.980], [-43.215, -22.960]
+                        [-43.230, -22.955], [-43.195, -22.955], [-43.195, -22.985],
+                        [-43.230, -22.980], [-43.230, -22.955]
                     ]]
                 }
             },
@@ -137,8 +146,8 @@ def criar_geojson_rio_municipio():
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-43.255, -22.985], [-43.245, -22.985], [-43.245, -22.995],
-                        [-43.255, -22.995], [-43.255, -22.985]
+                        [-43.255, -22.985], [-43.240, -22.985], [-43.240, -23.000],
+                        [-43.255, -23.000], [-43.255, -22.985]
                     ]]
                 }
             },
@@ -529,20 +538,24 @@ def criar_mapa_criminalidade():
     # Coordenadas do centro do município do Rio de Janeiro
     RIO_CENTER = [-22.9068, -43.1729]
     
-    # Limites geográficos do município para impedir navegação fora dele
+    # Limites geográficos RESTRITOS ao município do Rio (excluindo Baixada e Niterói)
     RIO_BOUNDS = [
-        [-23.083, -43.796],  # Sudoeste
-        [-22.746, -43.097]   # Nordeste
+        [-23.090, -43.730],  # Sudoeste (inclui Santa Cruz e Guaratiba)
+        [-22.745, -43.095]   # Nordeste (inclui Paquetá)
     ]
     
-    # Criar mapa SIMPLES E LIMPO
+    # Criar mapa FOCADO APENAS NO MUNICÍPIO DO RIO
     mapa = folium.Map(
         location=RIO_CENTER,
         zoom_start=11,
         tiles='CartoDB positron',  # Fundo limpo e minimalista
         max_bounds=True,
         min_zoom=10,
-        max_zoom=16
+        max_zoom=13,  # Limita zoom máximo para manter foco no município
+        min_lat=-23.090,  # Limita navegação ao município
+        max_lat=-22.745,
+        min_lon=-43.730,
+        max_lon=-43.095
     )
     
     # Obter GeoJSON das 33 RAs
@@ -562,30 +575,36 @@ def criar_mapa_criminalidade():
         for ra_id, dados in dados_ras.items()
     ])
     
-    # Adicionar cada região com sua cor específica
+    # Adicionar cada região com sua cor específica - PREENCHIMENTO COMPLETO
     for feature in geojson_data['features']:
-        ra_id = int(feature['id'])
+        ra_id = int(feature['id']) if isinstance(feature['id'], (int, str)) else int(feature['properties']['ra_id'])
         dados = dados_ras[ra_id]
         cor = obter_cor_criminalidade(dados['nivel'])
         
         # Criar GeoJson para cada região individualmente com sua cor
+        # IMPORTANTE: fillOpacity=1.0 para preenchimento completo sem transparência
         folium.GeoJson(
             feature,
             style_function=lambda x, cor=cor: {
                 'fillColor': cor,
-                'color': '#000000',  # Borda preta
-                'weight': 2,
-                'fillOpacity': 0.7
+                'color': '#333333',  # Borda cinza escuro
+                'weight': 1.5,
+                'fillOpacity': 1.0,  # Preenchimento completo, sem transparência
+                'opacity': 1.0
             },
             highlight_function=lambda x: {
                 'weight': 3,
-                'fillOpacity': 0.9
+                'fillOpacity': 1.0,
+                'color': '#000000'
             },
             tooltip=folium.Tooltip(
                 f"<b>{dados['nome']}</b><br>"
+                f"Zona: {dados['zona']}<br>"
                 f"Nível: {dados['nivel']}<br>"
                 f"Taxa: {dados['taxa_100k']:.1f}/100k hab<br>"
-                f"Crimes: {dados['crimes']:,}"
+                f"Crimes: {dados['crimes']:,}<br>"
+                f"População: {dados['pop']:,}",
+                sticky=True
             )
         ).add_to(mapa)
     

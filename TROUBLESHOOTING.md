@@ -122,3 +122,4 @@ E eu te ajudo imediatamente! 💪
 - [ ] ✅ Deploy no Streamlit Cloud
 
 **🎉 Tenta agora e me conta se funcionou! 🚀**
+

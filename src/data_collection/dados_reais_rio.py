@@ -210,3 +210,4 @@ def main():
 
 if __name__ == "__main__":
     dados_consolidados, dados_mensais, stats = main()
+

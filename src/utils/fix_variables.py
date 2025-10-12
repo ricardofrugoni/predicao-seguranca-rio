@@ -81,3 +81,4 @@ def create_sample_data():
 if __name__ == "__main__":
     fix_undefined_variables()
     print("✅ Correção de variáveis concluída!")
+

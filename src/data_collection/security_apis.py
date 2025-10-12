@@ -48,9 +48,9 @@ class SecurityDataCollector:
         data_inicio = datetime.now() - timedelta(days=periodo_meses * 30)
         
         crimes_data = []
+        # APENAS MUNICÍPIO DO RIO DE JANEIRO
         regioes = [
-            'Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 
-            'Baixada Fluminense', 'Grande Niterói'
+            'Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste'
         ]
         
         tipos_crime = [
@@ -75,13 +75,15 @@ class SecurityDataCollector:
                     else:
                         base_ocorrencias = np.random.poisson(30)
                     
-                    # Ajuste por região (Zona Sul mais segura, Baixada mais violenta)
+                    # Ajuste por região do município
                     if regiao == 'Zona Sul':
                         base_ocorrencias = int(base_ocorrencias * 0.6)
-                    elif regiao == 'Baixada Fluminense':
-                        base_ocorrencias = int(base_ocorrencias * 1.8)
                     elif regiao == 'Centro':
-                        base_ocorrencias = int(base_ocorrencias * 1.2)
+                        base_ocorrencias = int(base_ocorrencias * 1.1)
+                    elif regiao == 'Zona Norte':
+                        base_ocorrencias = int(base_ocorrencias * 1.3)
+                    elif regiao == 'Zona Oeste':
+                        base_ocorrencias = int(base_ocorrencias * 1.5)
                     
                     crimes_data.append({
                         'data': data_mes.strftime('%Y-%m-%d'),
@@ -105,10 +107,8 @@ class SecurityDataCollector:
         dados_demograficos = [
             {'regiao': 'Centro', 'populacao': 450000, 'area_km2': 15.2, 'densidade': 29605},
             {'regiao': 'Zona Sul', 'populacao': 380000, 'area_km2': 12.8, 'densidade': 29688},
-            {'regiao': 'Zona Norte', 'populacao': 1200000, 'area_km2': 45.3, 'densidade': 26490},
-            {'regiao': 'Zona Oeste', 'populacao': 850000, 'area_km2': 38.7, 'densidade': 21964},
-            {'regiao': 'Baixada Fluminense', 'populacao': 2100000, 'area_km2': 89.4, 'densidade': 23490},
-            {'regiao': 'Grande Niterói', 'populacao': 950000, 'area_km2': 32.1, 'densidade': 29626}
+            {'regiao': 'Zona Norte', 'populacao': 2400000, 'area_km2': 89.7, 'densidade': 26757},
+            {'regiao': 'Zona Oeste', 'populacao': 2500000, 'area_km2': 95.4, 'densidade': 26206}
         ]
         
         df = pd.DataFrame(dados_demograficos)
@@ -125,7 +125,8 @@ class SecurityDataCollector:
         np.random.seed(123)
         
         ongs_data = []
-        regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói']
+        # APENAS MUNICÍPIO DO RIO DE JANEIRO
+        regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste']
         
         for regiao in regioes:
             # Dados do Fogo Cruzado (disparos)
@@ -175,7 +176,8 @@ class SecurityDataCollector:
         np.random.seed(456)
         
         midia_data = []
-        regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói']
+        # APENAS MUNICÍPIO DO RIO DE JANEIRO
+        regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste']
         tipos_midia = ['Notícias Violência', 'Redes Sociais', 'Denúncias Online']
         
         for regiao in regioes:
@@ -312,3 +314,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

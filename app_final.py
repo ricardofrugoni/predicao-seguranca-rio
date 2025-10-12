@@ -37,10 +37,9 @@ def carregar_dados():
     """Carrega dados simulados de segurança pública"""
     np.random.seed(42)
     
-    # Regiões do RJ
+    # Regiões do MUNICÍPIO do Rio de Janeiro (apenas)
     regioes = [
-        'Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 
-        'Baixada Fluminense', 'Grande Niterói'
+        'Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste'
     ]
     
     # Tipos de crimes
@@ -70,15 +69,15 @@ def carregar_dados():
                 else:
                     base = np.random.poisson(30)
                 
-                # Ajuste por região
+                # Ajuste por região do município
                 if regiao == 'Zona Sul':
-                    base = int(base * 0.6)  # Mais segura
-                elif regiao == 'Baixada Fluminense':
-                    base = int(base * 1.8)  # Mais violenta
+                    base = int(base * 0.6)  # Zona Sul - menor criminalidade
                 elif regiao == 'Centro':
-                    base = int(base * 1.2)
+                    base = int(base * 1.1)  # Centro - criminalidade média-alta
                 elif regiao == 'Zona Norte':
-                    base = int(base * 1.1)
+                    base = int(base * 1.3)  # Zona Norte - criminalidade alta
+                elif regiao == 'Zona Oeste':
+                    base = int(base * 1.5)  # Zona Oeste - criminalidade mais alta
                 
                 dados.append({
                     'data': data_mes.strftime('%Y-%m-%d'),
@@ -93,14 +92,12 @@ def carregar_dados():
 @st.cache_data
 def calcular_indices(df):
     """Calcula índices de violência por região"""
-    # Dados demográficos
+    # Dados demográficos - APENAS MUNICÍPIO DO RIO DE JANEIRO
     populacao = {
         'Centro': 450000,
         'Zona Sul': 380000,
-        'Zona Norte': 1200000,
-        'Zona Oeste': 850000,
-        'Baixada Fluminense': 2100000,
-        'Grande Niterói': 950000
+        'Zona Norte': 2400000,
+        'Zona Oeste': 2500000
     }
     
     # Agrupa por região
@@ -122,8 +119,9 @@ def calcular_indices(df):
 # ============================================================================
 
 def main():
-    st.title("🔒 Análise de Segurança Pública - Rio de Janeiro")
-    st.markdown("### Dashboard de Violência por Regiões - Últimos 12 Meses")
+    st.title("🔒 Análise de Segurança Pública - Município do Rio de Janeiro")
+    st.markdown("### Dashboard de Violência por Regiões do Município - Últimos 12 Meses")
+    st.info("📍 **ATENÇÃO:** Este dashboard exibe APENAS dados do município do Rio de Janeiro, não inclui Baixada Fluminense, Niterói ou outros municípios.")
     
     # Carrega dados
     with st.spinner("🔄 Carregando dados..."):
@@ -154,11 +152,12 @@ def main():
         
         st.markdown("---")
         st.info("""
-        **📊 Dados Simulados:**
-        - Baseados em padrões reais do RJ
+        **📊 Dados - Município do Rio:**
+        - Baseados em padrões reais
         - Últimos 12 meses
-        - 6 regiões analisadas
+        - 4 regiões do município
         - 13 tipos de crimes
+        - ❌ NÃO inclui Baixada ou Niterói
         """)
     
     # Filtra dados
@@ -359,15 +358,17 @@ def main():
     
     st.markdown("---")
     st.markdown("""
-    **🔒 Sistema de Análise de Segurança Pública - Rio de Janeiro**
+    **🔒 Sistema de Análise de Segurança Pública - Município do Rio de Janeiro**
     
-    *Dashboard completo para análise de violência por regiões*
+    *Dashboard completo para análise de violência por regiões do município*
     
-    **📊 Dados:** Simulados baseados em padrões reais do RJ  
-    **🗺️ Regiões:** 6 regiões administrativas  
+    **📊 Dados:** Simulados baseados em padrões reais do município do RJ  
+    **🗺️ Regiões:** 4 zonas do município (Centro, Sul, Norte, Oeste)  
     **📅 Período:** Últimos 12 meses  
-    **🔍 Crimes:** 13 tipos principais analisados
+    **🔍 Crimes:** 13 tipos principais analisados  
+    **⚠️ IMPORTANTE:** NÃO inclui Baixada Fluminense, Niterói ou outros municípios
     """)
 
 if __name__ == "__main__":
     main()
+

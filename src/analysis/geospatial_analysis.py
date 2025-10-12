@@ -22,14 +22,13 @@ class GeospatialAnalyzer:
     """Analisador geoespacial de segurança pública"""
     
     def __init__(self):
-        # Coordenadas aproximadas das regiões do RJ
+        # Coordenadas aproximadas das regiões do MUNICÍPIO DO RIO DE JANEIRO
+        # IMPORTANTE: Não inclui Baixada Fluminense, Niterói ou outros municípios
         self.regioes_coords = {
             'Centro': [-22.9068, -43.1729],
             'Zona Sul': [-22.9711, -43.1822],
             'Zona Norte': [-22.8944, -43.2400],
-            'Zona Oeste': [-22.8847, -43.3300],
-            'Baixada Fluminense': [-22.7667, -43.4000],
-            'Grande Niterói': [-22.8833, -43.1000]
+            'Zona Oeste': [-22.8847, -43.3300]
         }
         
         # Cores para níveis de violência
@@ -292,3 +291,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

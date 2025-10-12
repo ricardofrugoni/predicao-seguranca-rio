@@ -77,9 +77,9 @@ def main():
         periodo_meses = st.slider("Período (meses)", 1, 24, 12)
         
         regioes_selecionadas = st.multiselect(
-            "Regiões",
-            ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói'],
-            default=['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói']
+            "Regiões (Município do Rio)",
+            ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste'],
+            default=['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste']
         )
         
         tipos_crime = st.multiselect(
@@ -325,3 +325,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
