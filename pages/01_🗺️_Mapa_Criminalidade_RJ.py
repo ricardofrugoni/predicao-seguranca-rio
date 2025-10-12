@@ -20,9 +20,9 @@ def load_data():
             if p.exists():
                 gdf = gpd.read_file(p)
                 if not gdf.empty:
-                    nivel_para_taxa = {"Muito Baixo": 15, "Baixo": 25, "Médio": 45, "Alto": 65, "Muito Alto": 85}
+                    nivel_map = {"Muito Baixo": 15, "Baixo": 25, "Médio": 45, "Alto": 65, "Muito Alto": 85}
                     if 'nivel' in gdf.columns:
-                        gdf['taxa_criminalidade'] = gdf['nivel'].map(nivel_para_taxa)
+                        gdf['taxa_criminalidade'] = gdf['nivel'].map(nivel_map)
                     else:
                         gdf['taxa_criminalidade'] = 50
                     if 'nome' in gdf.columns:
@@ -34,26 +34,25 @@ def load_data():
             continue
     return None
 
-def get_color(valor):
-    if valor < 20:
+def get_color(val):
+    if val < 20:
         return '#2ecc71'
-    elif valor < 40:
+    elif val < 40:
         return '#f1c40f'
-    elif valor < 60:
+    elif val < 60:
         return '#e67e22'
-    else:
-        return '#e74c3c'
+    return '#e74c3c'
 
 gdf = load_data()
 
 if gdf is None:
-    st.error("Não foi possível carregar os dados")
+    st.error("Dados não encontrados")
 else:
     bounds = gdf.total_bounds
-    centro = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
+    center = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     
-    mapa = folium.Map(
-        location=centro,
+    m = folium.Map(
+        location=center,
         zoom_start=10,
         tiles=None,
         dragging=False,
@@ -66,52 +65,33 @@ else:
     folium.TileLayer(
         tiles='https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
         attr='CartoDB',
-        name='CartoDB Positron No Labels',
         overlay=False,
         control=False
-    ).add_to(mapa)
+    ).add_to(m)
     
-    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
+    m.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     
-        folium.GeoJson(
+    folium.GeoJson(
         gdf,
-        style_function=lambda feature: {
-            'fillColor': get_color(feature['properties']['taxa_criminalidade']),
+        style_function=lambda f: {
+            'fillColor': get_color(f['properties']['taxa_criminalidade']),
             'fillOpacity': 0.9,
             'color': 'white',
-                'weight': 2,
-            'dashArray': '0'
+            'weight': 2
         },
         tooltip=folium.GeoJsonTooltip(
             fields=['nome_bairro', 'taxa_criminalidade'],
-            aliases=['Área:', 'Taxa:'],
-            sticky=True
-            )
-        ).add_to(mapa)
+            aliases=['Área:', 'Taxa:']
+        )
+    ).add_to(m)
     
-    st_folium(mapa, width=1200, height=700, returned_objects=[])
-    
-    st.markdown("---")
-    st.markdown("### Legenda de Criminalidade")
-    
-    col1, col2, col3, col4 = st.columns(4)
-with col1:
-        st.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Baixa</div>', unsafe_allow_html=True)
-with col2:
-        st.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Média</div>', unsafe_allow_html=True)
-    with col3:
-        st.markdown('<div style="background:#e67e22;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Alta</div>', unsafe_allow_html=True)
-    with col4:
-        st.markdown('<div style="background:#e74c3c;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Muito Alta</div>', unsafe_allow_html=True)
+    st_folium(m, width=1200, height=700)
     
     st.markdown("---")
-    st.markdown("### Dados por Área")
+    st.markdown("### Legenda")
     
-    for idx, row in gdf.iterrows():
-        nome = row['nome_bairro']
-        taxa = row['taxa_criminalidade']
-        cor = get_color(taxa)
-        st.markdown(f'<div style="background:{cor};padding:10px;margin:5px;border-radius:5px;color:white;font-weight:bold;">{nome} - Taxa: {taxa}</div>', unsafe_allow_html=True)
-
-st.markdown("---")
-st.caption("Mapa de Criminalidade - Município do Rio de Janeiro")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.markdown('<div style="background:#2ecc71;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Baixa</div>', unsafe_allow_html=True)
+    c2.markdown('<div style="background:#f1c40f;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Média</div>', unsafe_allow_html=True)
+    c3.markdown('<div style="background:#e67e22;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Alta</div>', unsafe_allow_html=True)
+    c4.markdown('<div style="background:#e74c3c;padding:15px;border-radius:8px;text-align:center;color:white;font-weight:bold;">Muito Alta</div>', unsafe_allow_html=True)
