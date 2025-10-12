@@ -31,6 +31,7 @@ st.set_page_config(
 
 st.title("🗺️ Mapa de Criminalidade do Município do Rio de Janeiro")
 st.markdown("### Intensidade Criminal por Região Administrativa")
+st.warning("⚠️ **ATENÇÃO:** Este mapa exibe APENAS o município do Rio de Janeiro (33 Regiões Administrativas). Não inclui Baixada Fluminense, Niterói, São Gonçalo ou outros municípios.")
 
 # ============================================================================
 # DADOS DAS 33 REGIÕES ADMINISTRATIVAS DO MUNICÍPIO DO RIO
@@ -521,24 +522,33 @@ def obter_cor_criminalidade(nivel):
 
 def criar_mapa_criminalidade():
     """
-    Cria mapa choropleth com preenchimento de regiões
+    Cria mapa focado APENAS no município do Rio de Janeiro
     NOTA: Não usa @st.cache_data porque mapas Folium não podem ser cacheados
     """
     
-    # Centro do município do Rio de Janeiro
+    # Coordenadas do centro do município do Rio de Janeiro
+    RIO_CENTER = [-22.9068, -43.1729]
+    
+    # Criar mapa centralizado no Rio com zoom apropriado para o município
     mapa = folium.Map(
-        location=[-22.9068, -43.1729],
-        zoom_start=10,
-        tiles='CartoDB positron'
+        location=RIO_CENTER,
+        zoom_start=11,  # Zoom focado no município (não no estado)
+        tiles='OpenStreetMap',
+        max_bounds=True,  # Limita o pan do mapa
+        min_zoom=10,      # Impede zoom out demais
+        max_zoom=18       # Permite zoom in para detalhes
     )
     
-    # Obter GeoJSON
+    # Obter GeoJSON - APENAS das 33 RAs do município do Rio de Janeiro
     geojson_data = criar_geojson_rio_municipio()
+    
+    # FILTRAR apenas dados do município do Rio (33 Regiões Administrativas)
+    # dados_ras já contém APENAS as RAs do município (não inclui Baixada, Niterói, etc.)
     
     # Adicionar camada choropleth
     folium.Choropleth(
         geo_data=geojson_data,
-        name='Criminalidade',
+        name='Criminalidade por Região Administrativa',
         data=pd.DataFrame([(ra_id, dados['taxa_100k']) for ra_id, dados in dados_ras.items()], 
                          columns=['ra_id', 'taxa']),
         columns=['ra_id', 'taxa'],
