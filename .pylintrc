@@ -1,0 +1,32 @@
+[MASTER]
+ignore=.venv,venv,env,.git,.tox,dist,doc,*egg,build
+
+[MESSAGES CONTROL]
+disable=
+    import-error,
+    no-member,
+    no-name-in-module,
+    missing-module-docstring,
+    missing-function-docstring,
+    missing-class-docstring,
+    invalid-name,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-locals,
+    too-many-branches,
+    too-many-statements,
+    too-many-instance-attributes,
+    line-too-long,
+    fixme,
+    broad-except
+
+[REPORTS]
+output-format=colorized
+reports=no
+
+[FORMAT]
+max-line-length=120
+
+[BASIC]
+good-names=i,j,k,x,y,z,df,ax,fig,pd,np,plt
+
