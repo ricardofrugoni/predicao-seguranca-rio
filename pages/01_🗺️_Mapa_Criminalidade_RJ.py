@@ -116,4 +116,4 @@ else:
             st.markdown(f'<div style="background:{cor};padding:10px;border-radius:5px;color:white;text-align:center;font-weight:bold;margin-top:10px;">Nível: {taxa}/100k hab</div>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.caption("Dados simulados - ISP-RJ | As cores respeitam os limites geográficos das zonas")
+st.caption("Dados simulados - ISP-RJ | As cores respeitam os limites geográficos")
