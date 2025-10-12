@@ -1,0 +1,879 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Copacabana/Leme",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.19,
+              -22.96
+            ],
+            [
+              -43.165,
+              -22.96
+            ],
+            [
+              -43.165,
+              -22.975
+            ],
+            [
+              -43.175,
+              -22.985
+            ],
+            [
+              -43.19,
+              -22.98
+            ],
+            [
+              -43.19,
+              -22.96
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Ipanema/Leblon",
+        "nivel": "Baixo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.23,
+              -22.975
+            ],
+            [
+              -43.19,
+              -22.975
+            ],
+            [
+              -43.19,
+              -22.995
+            ],
+            [
+              -43.22,
+              -23.01
+            ],
+            [
+              -43.24,
+              -23.0
+            ],
+            [
+              -43.23,
+              -22.975
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Botafogo/Flamengo",
+        "nivel": "Baixo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.195,
+              -22.935
+            ],
+            [
+              -43.17,
+              -22.935
+            ],
+            [
+              -43.165,
+              -22.955
+            ],
+            [
+              -43.175,
+              -22.965
+            ],
+            [
+              -43.195,
+              -22.96
+            ],
+            [
+              -43.195,
+              -22.935
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Lagoa/Jardim Botânico",
+        "nivel": "Baixo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.23,
+              -22.96
+            ],
+            [
+              -43.205,
+              -22.96
+            ],
+            [
+              -43.2,
+              -22.975
+            ],
+            [
+              -43.215,
+              -22.985
+            ],
+            [
+              -43.23,
+              -22.98
+            ],
+            [
+              -43.23,
+              -22.96
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Rocinha/São Conrado",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.26,
+              -22.985
+            ],
+            [
+              -43.24,
+              -22.985
+            ],
+            [
+              -43.24,
+              -23.005
+            ],
+            [
+              -43.255,
+              -23.01
+            ],
+            [
+              -43.26,
+              -23.0
+            ],
+            [
+              -43.26,
+              -22.985
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Centro Histórico",
+        "nivel": "Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.195,
+              -22.9
+            ],
+            [
+              -43.17,
+              -22.9
+            ],
+            [
+              -43.17,
+              -22.915
+            ],
+            [
+              -43.185,
+              -22.92
+            ],
+            [
+              -43.195,
+              -22.915
+            ],
+            [
+              -43.195,
+              -22.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Zona Portuária",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.19,
+              -22.885
+            ],
+            [
+              -43.165,
+              -22.885
+            ],
+            [
+              -43.165,
+              -22.9
+            ],
+            [
+              -43.18,
+              -22.905
+            ],
+            [
+              -43.19,
+              -22.9
+            ],
+            [
+              -43.19,
+              -22.885
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Santa Teresa/Lapa",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.195,
+              -22.915
+            ],
+            [
+              -43.18,
+              -22.915
+            ],
+            [
+              -43.175,
+              -22.93
+            ],
+            [
+              -43.185,
+              -22.935
+            ],
+            [
+              -43.195,
+              -22.93
+            ],
+            [
+              -43.195,
+              -22.915
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Tijuca",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.25,
+              -22.92
+            ],
+            [
+              -43.225,
+              -22.92
+            ],
+            [
+              -43.22,
+              -22.94
+            ],
+            [
+              -43.235,
+              -22.945
+            ],
+            [
+              -43.25,
+              -22.94
+            ],
+            [
+              -43.25,
+              -22.92
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Vila Isabel/Grajaú",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.265,
+              -22.91
+            ],
+            [
+              -43.24,
+              -22.91
+            ],
+            [
+              -43.24,
+              -22.93
+            ],
+            [
+              -43.255,
+              -22.935
+            ],
+            [
+              -43.265,
+              -22.93
+            ],
+            [
+              -43.265,
+              -22.91
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Maracanã/São Cristóvão",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.235,
+              -22.9
+            ],
+            [
+              -43.21,
+              -22.9
+            ],
+            [
+              -43.21,
+              -22.92
+            ],
+            [
+              -43.225,
+              -22.925
+            ],
+            [
+              -43.235,
+              -22.92
+            ],
+            [
+              -43.235,
+              -22.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Méier/Todos os Santos",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.3,
+              -22.89
+            ],
+            [
+              -43.27,
+              -22.89
+            ],
+            [
+              -43.265,
+              -22.915
+            ],
+            [
+              -43.285,
+              -22.92
+            ],
+            [
+              -43.3,
+              -22.91
+            ],
+            [
+              -43.3,
+              -22.89
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Madureira/Cascadura",
+        "nivel": "Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.36,
+              -22.86
+            ],
+            [
+              -43.33,
+              -22.86
+            ],
+            [
+              -43.325,
+              -22.885
+            ],
+            [
+              -43.345,
+              -22.895
+            ],
+            [
+              -43.36,
+              -22.885
+            ],
+            [
+              -43.36,
+              -22.86
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Penha/Complexo do Alemão",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.295,
+              -22.84
+            ],
+            [
+              -43.265,
+              -22.84
+            ],
+            [
+              -43.26,
+              -22.87
+            ],
+            [
+              -43.28,
+              -22.88
+            ],
+            [
+              -43.295,
+              -22.87
+            ],
+            [
+              -43.295,
+              -22.84
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Maré",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.26,
+              -22.84
+            ],
+            [
+              -43.23,
+              -22.84
+            ],
+            [
+              -43.225,
+              -22.865
+            ],
+            [
+              -43.245,
+              -22.87
+            ],
+            [
+              -43.26,
+              -22.865
+            ],
+            [
+              -43.26,
+              -22.84
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Ilha do Governador",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.24,
+              -22.79
+            ],
+            [
+              -43.2,
+              -22.79
+            ],
+            [
+              -43.195,
+              -22.825
+            ],
+            [
+              -43.22,
+              -22.83
+            ],
+            [
+              -43.24,
+              -22.82
+            ],
+            [
+              -43.24,
+              -22.79
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Barra da Tijuca",
+        "nivel": "Baixo"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.37,
+              -22.985
+            ],
+            [
+              -43.3,
+              -22.985
+            ],
+            [
+              -43.295,
+              -23.025
+            ],
+            [
+              -43.34,
+              -23.035
+            ],
+            [
+              -43.37,
+              -23.02
+            ],
+            [
+              -43.37,
+              -22.985
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Jacarepaguá",
+        "nivel": "Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.395,
+              -22.91
+            ],
+            [
+              -43.35,
+              -22.91
+            ],
+            [
+              -43.345,
+              -22.95
+            ],
+            [
+              -43.375,
+              -22.96
+            ],
+            [
+              -43.395,
+              -22.945
+            ],
+            [
+              -43.395,
+              -22.91
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Cidade de Deus",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.38,
+              -22.935
+            ],
+            [
+              -43.355,
+              -22.935
+            ],
+            [
+              -43.35,
+              -22.955
+            ],
+            [
+              -43.37,
+              -22.96
+            ],
+            [
+              -43.38,
+              -22.95
+            ],
+            [
+              -43.38,
+              -22.935
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Bangu/Realengo",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.49,
+              -22.85
+            ],
+            [
+              -43.425,
+              -22.85
+            ],
+            [
+              -43.42,
+              -22.9
+            ],
+            [
+              -43.465,
+              -22.91
+            ],
+            [
+              -43.49,
+              -22.89
+            ],
+            [
+              -43.49,
+              -22.85
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Campo Grande",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.59,
+              -22.875
+            ],
+            [
+              -43.52,
+              -22.875
+            ],
+            [
+              -43.515,
+              -22.93
+            ],
+            [
+              -43.565,
+              -22.94
+            ],
+            [
+              -43.59,
+              -22.92
+            ],
+            [
+              -43.59,
+              -22.875
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Santa Cruz",
+        "nivel": "Muito Alto"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.72,
+              -22.895
+            ],
+            [
+              -43.65,
+              -22.895
+            ],
+            [
+              -43.645,
+              -22.955
+            ],
+            [
+              -43.695,
+              -22.965
+            ],
+            [
+              -43.72,
+              -22.94
+            ],
+            [
+              -43.72,
+              -22.895
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Guaratiba",
+        "nivel": "Médio"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -43.62,
+              -23.035
+            ],
+            [
+              -43.555,
+              -23.035
+            ],
+            [
+              -43.55,
+              -23.085
+            ],
+            [
+              -43.595,
+              -23.09
+            ],
+            [
+              -43.62,
+              -23.07
+            ],
+            [
+              -43.62,
+              -23.035
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
