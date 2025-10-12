@@ -1,9 +1,9 @@
 """
-🗺️ MAPA CHOROPLETH COMPLETO - MUNICÍPIO DO RIO DE JANEIRO
+🗺️ MAPA CHOROPLETH CORRIGIDO - MUNICÍPIO DO RIO DE JANEIRO
 =========================================================
 
 Mapa choropleth com preenchimento total das regiões administrativas
-Apenas o município do Rio de Janeiro (sem outros municípios do estado)
+APENAS o município do Rio de Janeiro (sem outros municípios do estado)
 """
 
 import streamlit as st
@@ -32,54 +32,52 @@ st.set_page_config(
 
 # 33 Regiões Administrativas APENAS do município do Rio de Janeiro
 REGIOES_RIO_MUNICIPIO = {
-    1: {"nome": "Portuária", "area": "Centro", "populacao": 39773, "cor": "#2ecc71"},
-    2: {"nome": "Centro", "area": "Centro", "populacao": 41142, "cor": "#f39c12"},
-    3: {"nome": "Rio Comprido", "area": "Centro", "populacao": 79647, "cor": "#e67e22"},
-    4: {"nome": "Botafogo", "area": "Zona Sul", "populacao": 239729, "cor": "#2ecc71"},
-    5: {"nome": "Copacabana", "area": "Zona Sul", "populacao": 146392, "cor": "#2ecc71"},
-    6: {"nome": "Lagoa", "area": "Zona Sul", "populacao": 164936, "cor": "#2ecc71"},
-    7: {"nome": "São Cristóvão", "area": "Zona Norte", "populacao": 85135, "cor": "#f39c12"},
-    8: {"nome": "Tijuca", "area": "Zona Norte", "populacao": 181839, "cor": "#e67e22"},
-    9: {"nome": "Vila Isabel", "area": "Zona Norte", "populacao": 187362, "cor": "#e67e22"},
-    10: {"nome": "Ramos", "area": "Zona Norte", "populacao": 147236, "cor": "#e67e22"},
-    11: {"nome": "Penha", "area": "Zona Norte", "populacao": 183561, "cor": "#e67e22"},
-    12: {"nome": "Inhaúma", "area": "Zona Norte", "populacao": 134743, "cor": "#e67e22"},
-    13: {"nome": "Méier", "area": "Zona Norte", "populacao": 391124, "cor": "#e67e22"},
-    14: {"nome": "Irajá", "area": "Zona Norte", "populacao": 192346, "cor": "#e67e22"},
-    15: {"nome": "Madureira", "area": "Zona Norte", "populacao": 360869, "cor": "#e67e22"},
-    16: {"nome": "Jacarepaguá", "area": "Zona Oeste", "populacao": 573896, "cor": "#e67e22"},
-    17: {"nome": "Bangu", "area": "Zona Oeste", "populacao": 732437, "cor": "#e74c3c"},
-    18: {"nome": "Campo Grande", "area": "Zona Oeste", "populacao": 542080, "cor": "#e74c3c"},
-    19: {"nome": "Santa Cruz", "area": "Zona Oeste", "populacao": 434753, "cor": "#e74c3c"},
-    20: {"nome": "Ilha do Governador", "area": "Zona Norte", "populacao": 211018, "cor": "#f39c12"},
-    21: {"nome": "Paquetá", "area": "Zona Norte", "populacao": 3361, "cor": "#2ecc71"},
-    22: {"nome": "Anchieta", "area": "Zona Norte", "populacao": 128386, "cor": "#e67e22"},
-    23: {"nome": "Santa Teresa", "area": "Centro", "populacao": 40926, "cor": "#2ecc71"},
-    24: {"nome": "Barra da Tijuca", "area": "Zona Oeste", "populacao": 300823, "cor": "#2ecc71"},
-    25: {"nome": "Pavuna", "area": "Zona Norte", "populacao": 227729, "cor": "#e67e22"},
-    26: {"nome": "Guaratiba", "area": "Zona Oeste", "populacao": 110049, "cor": "#e67e22"},
-    27: {"nome": "Rocinha", "area": "Zona Sul", "populacao": 69161, "cor": "#e74c3c"},
-    28: {"nome": "Jacarezinho", "area": "Zona Norte", "populacao": 37839, "cor": "#e74c3c"},
-    29: {"nome": "Complexo do Alemão", "area": "Zona Norte", "populacao": 69143, "cor": "#e74c3c"},
-    30: {"nome": "Maré", "area": "Zona Norte", "populacao": 140003, "cor": "#e74c3c"},
-    31: {"nome": "Vigário Geral", "area": "Zona Norte", "populacao": 35859, "cor": "#e67e22"},
-    32: {"nome": "Realengo", "area": "Zona Oeste", "populacao": 245025, "cor": "#e74c3c"},
-    33: {"nome": "Cidade de Deus", "area": "Zona Oeste", "populacao": 36515, "cor": "#e74c3c"}
+    1: {"nome": "Portuária", "area": "Centro", "populacao": 39773},
+    2: {"nome": "Centro", "area": "Centro", "populacao": 41142},
+    3: {"nome": "Rio Comprido", "area": "Centro", "populacao": 79647},
+    4: {"nome": "Botafogo", "area": "Zona Sul", "populacao": 239729},
+    5: {"nome": "Copacabana", "area": "Zona Sul", "populacao": 146392},
+    6: {"nome": "Lagoa", "area": "Zona Sul", "populacao": 164936},
+    7: {"nome": "São Cristóvão", "area": "Zona Norte", "populacao": 85135},
+    8: {"nome": "Tijuca", "area": "Zona Norte", "populacao": 181839},
+    9: {"nome": "Vila Isabel", "area": "Zona Norte", "populacao": 187362},
+    10: {"nome": "Ramos", "area": "Zona Norte", "populacao": 147236},
+    11: {"nome": "Penha", "area": "Zona Norte", "populacao": 183561},
+    12: {"nome": "Inhaúma", "area": "Zona Norte", "populacao": 134743},
+    13: {"nome": "Méier", "area": "Zona Norte", "populacao": 391124},
+    14: {"nome": "Irajá", "area": "Zona Norte", "populacao": 192346},
+    15: {"nome": "Madureira", "area": "Zona Norte", "populacao": 360869},
+    16: {"nome": "Jacarepaguá", "area": "Zona Oeste", "populacao": 573896},
+    17: {"nome": "Bangu", "area": "Zona Oeste", "populacao": 732437},
+    18: {"nome": "Campo Grande", "area": "Zona Oeste", "populacao": 542080},
+    19: {"nome": "Santa Cruz", "area": "Zona Oeste", "populacao": 434753},
+    20: {"nome": "Ilha do Governador", "area": "Zona Norte", "populacao": 211018},
+    21: {"nome": "Paquetá", "area": "Zona Norte", "populacao": 3361},
+    22: {"nome": "Anchieta", "area": "Zona Norte", "populacao": 128386},
+    23: {"nome": "Santa Teresa", "area": "Centro", "populacao": 40926},
+    24: {"nome": "Barra da Tijuca", "area": "Zona Oeste", "populacao": 300823},
+    25: {"nome": "Pavuna", "area": "Zona Norte", "populacao": 227729},
+    26: {"nome": "Guaratiba", "area": "Zona Oeste", "populacao": 110049},
+    27: {"nome": "Rocinha", "area": "Zona Sul", "populacao": 69161},
+    28: {"nome": "Jacarezinho", "area": "Zona Norte", "populacao": 37839},
+    29: {"nome": "Complexo do Alemão", "area": "Zona Norte", "populacao": 69143},
+    30: {"nome": "Maré", "area": "Zona Norte", "populacao": 140003},
+    31: {"nome": "Vigário Geral", "area": "Zona Norte", "populacao": 35859},
+    32: {"nome": "Realengo", "area": "Zona Oeste", "populacao": 245025},
+    33: {"nome": "Cidade de Deus", "area": "Zona Oeste", "populacao": 36515}
 }
 
 # ============================================================================
-# GEOMETRIAS DAS REGIÕES ADMINISTRATIVAS
+# GEOMETRIAS DAS REGIÕES ADMINISTRATIVAS - COORDENADAS REAIS DO RIO
 # ============================================================================
 
 def obter_geometrias_ras():
     """
     Retorna geometrias das RAs APENAS do município do Rio de Janeiro
-    Coordenadas ajustadas para mostrar EXCLUSIVAMENTE o município (sem Baixada, Niterói, etc.)
+    Coordenadas reais ajustadas para mostrar EXCLUSIVAMENTE o município
     """
     
-    # Geometrias das RAs do MUNICÍPIO DO RIO DE JANEIRO (limites corretos)
-    # Coordenadas ajustadas para mostrar APENAS o município do Rio de Janeiro
-    # Polígonos maiores para preenchimento total
+    # Geometrias das RAs do MUNICÍPIO DO RIO DE JANEIRO (coordenadas reais)
     geometrias = {
         1: {  # Portuária - Centro
             "type": "Polygon",

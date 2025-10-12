@@ -441,7 +441,7 @@ def create_comparison_chart(resultados, datas_hist, datas_futuro):
     # Histórico
     fig.add_trace(go.Scatter(
         x=datas_hist,
-        y=resultados[0]['forecast'] if resultados else [0],  # Placeholder
+        y=resultados[0].get('forecast', [0]) if (resultados and len(resultados) > 0 and isinstance(resultados[0], dict)) else [0],
         mode='lines',
         name='Histórico',
         line=dict(color='black', width=2)
@@ -643,6 +643,28 @@ def main():
         # Visualizações
         if resultados:
             st.success(f"✅ {len(resultados)} modelos executados com sucesso!")
+            
+            # DEBUG - Análise de resultados
+            print("="*50)
+            print("DEBUG - Análise de resultados")
+            print("="*50)
+            print(f"Tipo de resultados: {type(resultados)}")
+            print(f"É lista? {isinstance(resultados, list)}")
+            print(f"Tamanho: {len(resultados) if resultados else 0}")
+
+            if resultados:
+                print(f"\nPrimeiro elemento:")
+                print(f"  Tipo: {type(resultados[0])}")
+                print(f"  Conteúdo: {resultados[0]}")
+                
+                if isinstance(resultados[0], dict):
+                    print(f"  Chaves disponíveis: {list(resultados[0].keys())}")
+                    print(f"  Tem 'forecast'? {'forecast' in resultados[0]}")
+                else:
+                    print(f"  ERRO: Não é um dicionário!")
+            else:
+                print("\nResultados está vazio!")
+            print("="*50)
             
             # Gráfico comparativo
             st.markdown("## 📊 Comparação de Modelos")
