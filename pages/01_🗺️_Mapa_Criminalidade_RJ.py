@@ -519,9 +519,11 @@ def obter_cor_criminalidade(nivel):
 # CRIAR MAPA CHOROPLETH
 # ============================================================================
 
-@st.cache_data
 def criar_mapa_criminalidade():
-    """Cria mapa choropleth com preenchimento de regiões"""
+    """
+    Cria mapa choropleth com preenchimento de regiões
+    NOTA: Não usa @st.cache_data porque mapas Folium não podem ser cacheados
+    """
     
     # Centro do município do Rio de Janeiro
     mapa = folium.Map(
