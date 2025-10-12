@@ -14,12 +14,12 @@ CORES = {"Muito Baixo": "#27ae60", "Baixo": "#2ecc71", "Médio": "#f39c12", "Alt
 
 def carregar_geojson():
     paths = [
-        Path(__file__).parent.parent / "data" / "shapefiles" / "bairros_rio_simulado.geojson",
-        Path("data/shapefiles/bairros_rio_simulado.geojson"),
+        Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_limites_reais.geojson",
+        Path("data/shapefiles/zonas_rio_limites_reais.geojson"),
+        Path(__file__).parent.parent / "data" / "shapefiles" / "bairros_rio_real.geojson",
+        Path("data/shapefiles/bairros_rio_real.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "municipio_rio_zonas_real.geojson",
-        Path("data/shapefiles/municipio_rio_zonas_real.geojson"),
-        Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
-        Path("data/shapefiles/zonas_rio.geojson")
+        Path("data/shapefiles/municipio_rio_zonas_real.geojson")
     ]
     for p in paths:
         try:
