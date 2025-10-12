@@ -1,12 +1,8 @@
 """
-🗺️ MAPA CHOROPLETH - CRIMINALIDADE POR ZONA
-============================================
+🗺️ MAPA CHOROPLETH - CRIMINALIDADE DO MUNICÍPIO DO RIO
+======================================================
 
-Mapa do MUNICÍPIO DO RIO DE JANEIRO com:
-- 4 Zonas Principais (Centro, Sul, Norte, Oeste)
-- Cores sólidas por intensidade de criminalidade
-- Preenchimento completo das áreas
-- Apenas o município (sem Baixada Fluminense, Niterói, etc.)
+Mapa do MUNICÍPIO DO RIO DE JANEIRO com áreas detalhadas.
 """
 
 import streamlit as st
@@ -15,12 +11,6 @@ import folium
 import json
 from pathlib import Path
 from streamlit_folium import folium_static
-import warnings
-warnings.filterwarnings('ignore')
-
-# ============================================================================
-# CONFIGURAÇÃO
-# ============================================================================
 
 st.set_page_config(
     page_title="🗺️ Mapa de Criminalidade - Rio de Janeiro",
@@ -30,366 +20,128 @@ st.set_page_config(
 
 st.title("🗺️ Mapa de Criminalidade do Município do Rio de Janeiro")
 st.markdown("### Intensidade Criminal por Região")
-st.warning("⚠️ **ATENÇÃO:** Este mapa exibe APENAS o município do Rio de Janeiro. Não inclui Baixada Fluminense, Niterói, São Gonçalo ou outros municípios da região metropolitana.")
+st.warning("⚠️ **ATENÇÃO:** Este mapa exibe APENAS o município do Rio de Janeiro.")
 
-# ============================================================================
-# DADOS DAS 4 ZONAS DO MUNICÍPIO
-# ============================================================================
-
-dados_zonas = {
-    "Centro": {
-        "populacao": 450000,
-        "crimes_totais": 7226,  # Soma das RAs do Centro
-        "nivel": "Médio",
-        "cor": "#f39c12"  # Laranja
-    },
-    "Zona Sul": {
-        "populacao": 620218,  # Botafogo + Copacabana + Lagoa + Rocinha
-        "crimes_totais": 14365,
-        "nivel": "Baixo",
-        "cor": "#27ae60"  # Verde escuro
-    },
-    "Zona Norte": {
-        "populacao": 2389742,
-        "crimes_totais": 69785,
-        "nivel": "Alto",
-        "cor": "#e67e22"  # Laranja escuro
-    },
-    "Zona Oeste": {
-        "populacao": 2470583,
-        "crimes_totais": 67592,
-        "nivel": "Muito Alto",
-        "cor": "#e74c3c"  # Vermelho
-    }
+# Cores por nível de criminalidade
+cores_nivel = {
+    "Muito Baixo": "#2ecc71",
+    "Baixo": "#27ae60",
+    "Médio": "#f39c12",
+    "Alto": "#e67e22",
+    "Muito Alto": "#e74c3c"
 }
 
-# Calcular taxas
-for zona, dados in dados_zonas.items():
-    dados['taxa_100k'] = round((dados['crimes_totais'] / dados['populacao']) * 100000, 1)
-
-# ============================================================================
-# CRIAR MAPA CHOROPLETH
-# ============================================================================
-
-def criar_mapa_choropleth():
-    """Cria mapa choropleth com as 4 zonas do Rio de Janeiro"""
+def criar_mapa():
+    """Cria mapa choropleth"""
     
-    # Carregar GeoJSON com áreas detalhadas do município
-    # Tenta múltiplos caminhos possíveis (prioriza versão detalhada)
-    possiveis_caminhos = [
+    # Tentar carregar GeoJSON
+    caminhos = [
         Path(__file__).parent.parent / "data" / "shapefiles" / "areas_detalhadas_rio.geojson",
         Path("data/shapefiles/areas_detalhadas_rio.geojson"),
         Path("projeto_violencia_rj/data/shapefiles/areas_detalhadas_rio.geojson"),
-        # Fallbacks
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio_realista.geojson",
         Path("data/shapefiles/zonas_rio_realista.geojson"),
         Path(__file__).parent.parent / "data" / "shapefiles" / "zonas_rio.geojson",
         Path("data/shapefiles/zonas_rio.geojson"),
     ]
     
-    geojson_zonas = None
-    caminho_usado = None
-    
-    for geojson_path in possiveis_caminhos:
-        try:
-            if geojson_path.exists():
-                with open(geojson_path, 'r', encoding='utf-8') as f:
-                    geojson_zonas = json.load(f)
-                caminho_usado = geojson_path
-                break
-        except Exception as e:
-            continue
-    
-    if not geojson_zonas:
-        st.error(f"❌ Arquivo GeoJSON das zonas não encontrado!")
-        
-        import os
-        st.error(f"Diretório atual: {os.getcwd()}")
-        
-        for p in possiveis_caminhos:
-            st.text(f"{'✅' if p.exists() else '❌'} {p} {'(absoluto: ' + str(p.absolute()) + ')' if p.exists() else ''}")
-        
-        st.info("💡 Execute: `python scripts/criar_mapa_zonas.py` na pasta projeto_violencia_rj")
-        return None
-    
-    # Debug: mostrar qual arquivo foi carregado
-    # st.success(f"✅ GeoJSON carregado de: {caminho_usado}")
-    
-    # Tentar carregar limite municipal para máscara
-    limite_municipal = None
-    caminhos_limite = [
-        Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_ibge.geojson",
-        Path("data/shapefiles/limite_municipal_ibge.geojson"),
-        Path(__file__).parent.parent / "data" / "shapefiles" / "limite_municipal_rio.geojson",
-        Path("data/shapefiles/limite_municipal_rio.geojson"),
-    ]
-    
-    for caminho in caminhos_limite:
+    geojson_data = None
+    for caminho in caminhos:
         try:
             if caminho.exists():
                 with open(caminho, 'r', encoding='utf-8') as f:
-                    limite_municipal = json.load(f)
+                    geojson_data = json.load(f)
+                st.success(f"✅ Carregado: {caminho.name}")
                 break
         except:
             continue
     
-    # Preparar DataFrame para o choropleth
-    df_mapa = pd.DataFrame([
-        {
-            'zona': zona,
-            'taxa_100k': dados['taxa_100k'],
-            'nivel': dados['nivel'],
-            'crimes': dados['crimes_totais'],
-            'populacao': dados['populacao']
-        }
-        for zona, dados in dados_zonas.items()
-    ])
+    if not geojson_data:
+        st.error("❌ Arquivo GeoJSON não encontrado!")
+        st.info("Execute: `python scripts/buscar_dados_oficiais_rio.py`")
+        return None
     
-    # Centro do Rio de Janeiro (ajustado)
-    RIO_CENTER = [-22.9068, -43.4200]
-    
-    # Criar mapa base com limites restritos ao município
+    # Centro do Rio
     mapa = folium.Map(
-        location=RIO_CENTER,
+        location=[-22.9068, -43.4200],
         zoom_start=10,
         tiles='CartoDB positron',
         min_zoom=10,
-        max_zoom=14,
-        max_bounds=True,
-        # Limites do município do Rio de Janeiro
-        min_lat=-23.090,
-        max_lat=-22.745,
-        min_lon=-43.800,
-        max_lon=-43.095
+        max_zoom=14
     )
     
-    # Adicionar limite municipal como fundo (se disponível)
-    if limite_municipal:
-        folium.GeoJson(
-            limite_municipal,
-            name='Limite Municipal',
-            style_function=lambda x: {
-                'fillColor': '#f0f0f0',
-                'color': '#333333',
-                'weight': 3,
-                'fillOpacity': 0.1
-            }
-        ).add_to(mapa)
-    
-    # Adicionar Choropleth das zonas
-    folium.Choropleth(
-        geo_data=geojson_zonas,
-        name='choropleth',
-        data=df_mapa,
-        columns=['zona', 'taxa_100k'],
-        key_on='feature.properties.nome',
-        fill_color='YlOrRd',
-        fill_opacity=1.0,  # Preenchimento total
-        line_opacity=1.0,
-        line_weight=2,
-        line_color='#000000',
-        legend_name='Taxa de Criminalidade (por 100k hab)',
-        smooth_factor=0
-    ).add_to(mapa)
-    
-    # Mapeamento de cores por nível (para áreas detalhadas)
-    cores_por_nivel = {
-        "Muito Baixo": "#2ecc71",  # Verde
-        "Baixo": "#27ae60",         # Verde escuro
-        "Médio": "#f39c12",         # Laranja
-        "Alto": "#e67e22",          # Laranja escuro
-        "Muito Alto": "#e74c3c"     # Vermelho
-    }
-    
-    # Adicionar tooltips personalizados
-    def style_function(feature):
-        nome = feature['properties'].get('nome', '')
+    # Adicionar cada feature com sua cor
+    for feature in geojson_data.get('features', []):
         nivel = feature['properties'].get('nivel', 'Médio')
+        nome = feature['properties'].get('nome', 'Sem nome')
+        cor = cores_nivel.get(nivel, '#f39c12')
         
-        # Tenta pegar cor dos dados_zonas, senão usa o nível
-        if nome in dados_zonas:
-            cor = dados_zonas[nome]['cor']
-        else:
-            cor = cores_por_nivel.get(nivel, '#f39c12')
-        
-        return {
-            'fillColor': cor,
-            'color': '#000000',
-            'weight': 1,
-            'fillOpacity': 1.0
-        }
-    
-    highlight_function = lambda x: {
-        'weight': 4,
-        'fillOpacity': 1.0
-    }
-    
-    # Adicionar GeoJson com tooltips
-    folium.GeoJson(
-        geojson_zonas,
-        style_function=style_function,
-        highlight_function=highlight_function,
-        tooltip=folium.GeoJsonTooltip(
-            fields=['nome'],
-            aliases=['Zona:'],
-            style="""
-                background-color: white;
-                color: #333333;
-                font-family: arial;
-                font-size: 12px;
-                padding: 10px;
-            """
-        )
-    ).add_to(mapa)
-    
-    # Adicionar rótulos nas zonas
-    for feature in geojson_zonas['features']:
-        nome = feature['properties']['nome']
-        coords = feature['geometry']['coordinates'][0]
-        
-        # Calcular centro do polígono (aproximação simples)
-        lats = [c[1] for c in coords]
-        lons = [c[0] for c in coords]
-        centro = [sum(lats) / len(lats), sum(lons) / len(lons)]
-        
-        dados = dados_zonas[nome]
-        
-        # Adicionar marcador com informações
-        folium.Marker(
-            location=centro,
-            icon=folium.DivIcon(html=f"""
-                <div style="
-                    background-color: white;
-                    border: 2px solid {dados['cor']};
-                    border-radius: 5px;
-                    padding: 5px 10px;
-                    font-size: 12px;
-                    font-weight: bold;
-                    color: #333;
-                    text-align: center;
-                    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                    white-space: nowrap;
-                ">
-                    {nome}<br>
-                    <span style="color: {dados['cor']};">{dados['nivel']}</span><br>
-                    <small>{dados['taxa_100k']:.0f}/100k</small>
-                </div>
-            """)
+        folium.GeoJson(
+            feature,
+            style_function=lambda x, cor=cor: {
+                'fillColor': cor,
+                'color': '#000000',
+                'weight': 1,
+                'fillOpacity': 0.8
+            },
+            tooltip=f"{nome} - {nivel}"
         ).add_to(mapa)
     
-    # Adicionar legenda customizada
-    legenda_html = """
-    <div style="position: fixed; 
-                bottom: 50px; right: 50px; width: 220px; height: auto; 
-                background-color: white; z-index:9999; font-size:14px;
-                border:2px solid grey; border-radius: 5px; padding: 15px;
-                box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-        <p style="margin-top:0; font-weight: bold; text-align: center; font-size: 16px;">
-            Nível de Criminalidade
+    # Legenda
+    legenda_html = '''
+    <div style="position: fixed; bottom: 50px; right: 50px; width: 200px; 
+                background-color: white; z-index:9999; padding: 10px;
+                border:2px solid grey; border-radius: 5px;">
+        <p style="margin:0; font-weight: bold;">Nível de Criminalidade</p>
+        <p style="margin: 5px 0;">
+            <i style="background: #2ecc71; width: 30px; height: 15px; 
+               float: left; margin-right: 8px;"></i> Muito Baixo
         </p>
-        <div style="margin: 10px 0; padding: 8px; background-color: #27ae60; color: white; border-radius: 3px;">
-            <b>Zona Sul - Baixo</b><br>
-            <small>2.315 crimes/100k hab</small>
-        </div>
-        <div style="margin: 10px 0; padding: 8px; background-color: #f39c12; color: white; border-radius: 3px;">
-            <b>Centro - Médio</b><br>
-            <small>1.606 crimes/100k hab</small>
-        </div>
-        <div style="margin: 10px 0; padding: 8px; background-color: #e67e22; color: white; border-radius: 3px;">
-            <b>Zona Norte - Alto</b><br>
-            <small>2.920 crimes/100k hab</small>
-        </div>
-        <div style="margin: 10px 0; padding: 8px; background-color: #e74c3c; color: white; border-radius: 3px;">
-            <b>Zona Oeste - Muito Alto</b><br>
-            <small>2.736 crimes/100k hab</small>
-        </div>
+        <p style="margin: 5px 0;">
+            <i style="background: #27ae60; width: 30px; height: 15px; 
+               float: left; margin-right: 8px;"></i> Baixo
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #f39c12; width: 30px; height: 15px; 
+               float: left; margin-right: 8px;"></i> Médio
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #e67e22; width: 30px; height: 15px; 
+               float: left; margin-right: 8px;"></i> Alto
+        </p>
+        <p style="margin: 5px 0;">
+            <i style="background: #e74c3c; width: 30px; height: 15px; 
+               float: left; margin-right: 8px;"></i> Muito Alto
+        </p>
     </div>
-    """
+    '''
     mapa.get_root().html.add_child(folium.Element(legenda_html))
     
     return mapa
 
-# ============================================================================
-# EXIBIR MAPA E ESTATÍSTICAS
-# ============================================================================
-
+# Exibir mapa
 col1, col2 = st.columns([3, 1])
 
 with col1:
-    st.markdown("#### 📍 Mapa Choropleth do Município")
-    st.info("💡 **Nota:** Mapa com preenchimento completo das 4 zonas do município do Rio de Janeiro.")
-    
-    mapa = criar_mapa_choropleth()
-    
+    st.markdown("#### 📍 Mapa do Município")
+    mapa = criar_mapa()
     if mapa:
-    folium_static(mapa, width=900, height=600)
-    else:
-        st.error("Erro ao carregar o mapa. Execute o script: `python scripts/criar_mapa_zonas.py`")
+        folium_static(mapa, width=900, height=600)
 
 with col2:
-    st.markdown("#### 📊 Estatísticas por Zona")
+    st.markdown("#### 📊 Informações")
+    st.info("""
+    **🗺️ Mapa do Município do Rio**
     
-    for zona, dados in dados_zonas.items():
-        with st.expander(f"**{zona}**", expanded=False):
-            st.markdown(f"""
-            **Nível:** {dados['nivel']}  
-            **População:** {dados['populacao']:,}  
-            **Crimes Totais:** {dados['crimes_totais']:,}  
-            **Taxa:** {dados['taxa_100k']:.1f}/100k hab
-            """)
+    Mostra apenas o município do Rio de Janeiro dividido em regiões com níveis de criminalidade.
     
-    st.markdown("---")
-    st.markdown("#### 📈 Estatísticas Gerais")
-    
-    total_pop = sum(d['populacao'] for d in dados_zonas.values())
-    total_crimes = sum(d['crimes_totais'] for d in dados_zonas.values())
-    taxa_media = (total_crimes / total_pop) * 100000
-    
-    st.metric("População Total", f"{total_pop:,}")
-    st.metric("Crimes Totais", f"{total_crimes:,}")
-    st.metric("Taxa Média", f"{taxa_media:.1f}/100k")
-
-# ============================================================================
-# TABELA COMPARATIVA
-# ============================================================================
-
-st.markdown("---")
-st.markdown("### 📋 Comparação Entre Zonas")
-
-df_comparacao = pd.DataFrame([
-    {
-        'Zona': zona,
-        'População': dados['populacao'],
-        'Crimes': dados['crimes_totais'],
-        'Taxa/100k': dados['taxa_100k'],
-        'Nível': dados['nivel']
-    }
-    for zona, dados in dados_zonas.items()
-])
-
-# Ordenar por taxa
-df_comparacao = df_comparacao.sort_values('Taxa/100k', ascending=False)
-
-# Aplicar cores
-def highlight_row(row):
-    cor = dados_zonas[row['Zona']]['cor']
-    return [f'background-color: {cor}; color: white; font-weight: bold'] * len(row)
-
-st.dataframe(
-    df_comparacao.style.apply(highlight_row, axis=1),
-    use_container_width=True
-)
-
-# ============================================================================
-# RODAPÉ
-# ============================================================================
+    Cores indicam intensidade criminal.
+    """)
 
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; color: #7f8c8d; padding: 20px;">
-    <p><b>🗺️ Mapa Choropleth do Município do Rio de Janeiro</b></p>
-    <p>Mapa com preenchimento completo das 4 zonas principais.</p>
-    <p><b>⚠️ Nota:</b> Os dados são baseados em estatísticas oficiais agregadas por zona.</p>
-    <p><b>✅ Município do Rio de Janeiro</b> - Não inclui Baixada Fluminense, Niterói ou outros municípios.</p>
+<div style="text-align: center; padding: 20px;">
+    <p><b>Município do Rio de Janeiro</b></p>
+    <p>Mapa com divisões por nível de criminalidade</p>
 </div>
 """, unsafe_allow_html=True)
