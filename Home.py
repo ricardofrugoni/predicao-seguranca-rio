@@ -24,12 +24,13 @@ st.set_page_config(
 )
 
 def main():
-    st.title("🔒 Análise de Segurança Pública - Rio de Janeiro")
-    st.markdown("### Dashboard de Violência por Regiões")
+    st.title("🔒 Análise de Segurança Pública - Município do Rio de Janeiro")
+    st.markdown("### Dashboard de Violência por Regiões do Município")
+    st.info("📍 **Apenas Município do Rio de Janeiro** - Excluindo Baixada Fluminense, Niterói e outros municípios")
     
-    # Dados simulados
+    # Dados simulados - APENAS MUNICÍPIO DO RIO DE JANEIRO
     np.random.seed(42)
-    regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste', 'Baixada Fluminense', 'Grande Niterói']
+    regioes = ['Centro', 'Zona Sul', 'Zona Norte', 'Zona Oeste']  # Apenas município do Rio
     tipos_crime = ['Homicídio Doloso', 'Roubo a Transeunte', 'Furto a Transeunte', 'Violência Doméstica']
     
     dados = []
@@ -37,9 +38,11 @@ def main():
         for crime in tipos_crime:
             base = np.random.poisson(50)
             if regiao == 'Zona Sul':
-                base = int(base * 0.6)
-            elif regiao == 'Baixada Fluminense':
-                base = int(base * 1.8)
+                base = int(base * 0.6)  # Zona Sul tem menor criminalidade
+            elif regiao == 'Zona Norte':
+                base = int(base * 1.3)  # Zona Norte tem maior criminalidade
+            elif regiao == 'Zona Oeste':
+                base = int(base * 1.5)  # Zona Oeste tem maior criminalidade
             
             dados.append({
                 'regiao': regiao,
