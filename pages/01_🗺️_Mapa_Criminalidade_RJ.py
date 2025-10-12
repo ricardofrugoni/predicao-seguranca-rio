@@ -41,8 +41,8 @@ def criar_mapa_estatico(gdf):
     gdf['cor'].fillna('#95a5a6', inplace=True)
     
     fig, ax = plt.subplots(1, 1, figsize=(12, 10))
-    fig.patch.set_facecolor('#1a1a1a')
-    ax.set_facecolor('#1a1a1a')
+    fig.patch.set_facecolor('white')
+    ax.set_facecolor('white')
     
     for idx, row in gdf.iterrows():
         gdf[gdf.index == idx].plot(
@@ -59,12 +59,12 @@ def criar_mapa_estatico(gdf):
         ax.text(
             centroid.x, centroid.y,
             f"{nome}\n{nivel}",
-            fontsize=10,
+            fontsize=11,
             ha='center',
             va='center',
             color='white',
             weight='bold',
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='black', alpha=0.7, edgecolor='none')
+            bbox=dict(boxstyle='round,pad=0.6', facecolor='black', alpha=0.8, edgecolor='white', linewidth=1)
         )
     
     ax.axis('off')
