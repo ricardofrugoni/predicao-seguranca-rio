@@ -436,16 +436,19 @@ def load_sample_data():
     })
 
 def create_comparison_chart(resultados, serie_hist, datas_futuro):
-    """Cria gráfico comparativo dos modelos - CORRIGIDO"""
+    """Cria gráfico comparativo dos modelos - APENAS 24 MESES (12 históricos + 12 preditivos)"""
     fig = go.Figure()
     
     # Cores para diferentes modelos
     cores = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F']
     
-    # Histórico (série completa)
+    # LIMITA HISTÓRICO aos últimos 12 meses
+    serie_hist_limitada = serie_hist.tail(12)
+    
+    # Histórico (apenas últimos 12 meses)
     fig.add_trace(go.Scatter(
-        x=serie_hist.index,
-        y=serie_hist.values,
+        x=serie_hist_limitada.index,
+        y=serie_hist_limitada.values,
         mode='lines',
         name='Histórico',
         line=dict(color='#1f77b4', width=3),
@@ -549,9 +552,12 @@ def main():
     st.sidebar.title("🎛️ Configurações")
     
     # Parâmetros
-    horizonte = st.sidebar.slider("Horizonte (meses)", 1, 24, 6)
+    horizonte = st.sidebar.slider("Horizonte (meses)", 1, 24, 12)  # Padrão 12 meses
     n_lags = st.sidebar.slider("Lags (meses)", 3, 24, 12)
     epochs = st.sidebar.slider("Epochs LSTM", 10, 200, 50)
+    
+    # Info sobre visualização
+    st.sidebar.info("📊 Gráfico mostra:\n- 12 meses históricos\n- Previsão configurada")
     
     # Modelos a executar
     st.sidebar.subheader("🤖 Modelos")
