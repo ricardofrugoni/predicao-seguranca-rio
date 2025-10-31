@@ -220,3 +220,4 @@ Todos os notebooks e scripts Python executam corretamente com as importações c
 
 
 
+
