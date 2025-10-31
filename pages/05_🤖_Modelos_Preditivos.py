@@ -417,12 +417,13 @@ class AdvancedEnsemble:
         }
 
 def load_sample_data():
-    """Carrega dados de exemplo"""
+    """Carrega dados de exemplo - ATUALIZADO PARA INCLUIR 2025"""
     np.random.seed(42)
-    datas = pd.date_range(start='2020-01-01', end='2024-12-31', freq='MS')
+    # Mudei para incluir todo 2025
+    datas = pd.date_range(start='2020-01-01', end='2025-10-31', freq='MS')
     
     # Simula série temporal com tendência e sazonalidade
-    tendencia = np.linspace(100, 80, len(datas))
+    tendencia = np.linspace(100, 75, len(datas))  # Tendência de queda
     sazonalidade = 10 * np.sin(np.arange(len(datas)) * 2 * np.pi / 12)
     ruido = np.random.normal(0, 5, len(datas))
     
@@ -434,52 +435,81 @@ def load_sample_data():
         'valor': valores
     })
 
-def create_comparison_chart(resultados, datas_hist, datas_futuro):
-    """Cria gráfico comparativo dos modelos"""
+def create_comparison_chart(resultados, serie_hist, datas_futuro):
+    """Cria gráfico comparativo dos modelos - CORRIGIDO"""
     fig = go.Figure()
-    
-    # Histórico
-    fig.add_trace(go.Scatter(
-        x=datas_hist,
-        y=resultados[0].get('forecast', [0]) if (resultados and len(resultados) > 0 and isinstance(resultados[0], dict)) else [0],
-        mode='lines',
-        name='Histórico',
-        line=dict(color='black', width=2)
-    ))
     
     # Cores para diferentes modelos
     cores = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F']
     
+    # Histórico (série completa)
+    fig.add_trace(go.Scatter(
+        x=serie_hist.index,
+        y=serie_hist.values,
+        mode='lines',
+        name='Histórico',
+        line=dict(color='#1f77b4', width=3),
+        hovertemplate='%{x|%Y-%m}<br>%{y:.0f} crimes<extra></extra>'
+    ))
+    
     # Adiciona previsões de cada modelo
     for i, (nome, resultado) in enumerate(resultados):
         if resultado and 'forecast' in resultado:
+            # Linha de previsão
             fig.add_trace(go.Scatter(
                 x=datas_futuro,
                 y=resultado['forecast'],
                 mode='lines+markers',
                 name=nome,
-                line=dict(color=cores[i % len(cores)], width=2, dash='dash')
+                line=dict(color=cores[i % len(cores)], width=2.5, dash='dash'),
+                marker=dict(size=8),
+                hovertemplate=f'{nome}<br>%{{x|%Y-%m}}<br>%{{y:.0f}} crimes<extra></extra>'
             ))
             
-            # Intervalo de confiança
+            # Intervalo de confiança (banda sombreada)
             if 'lower' in resultado and 'upper' in resultado:
                 fig.add_trace(go.Scatter(
                     x=datas_futuro.tolist() + datas_futuro.tolist()[::-1],
                     y=resultado['upper'] + resultado['lower'][::-1],
                     fill='toself',
-                    fillcolor=cores[i % len(cores)].replace(')', ', 0.2)').replace('rgb', 'rgba'),
+                    fillcolor=cores[i % len(cores)].replace('rgb', 'rgba').replace(')', ', 0.15)'),
                     line=dict(color='rgba(255,255,255,0)'),
                     showlegend=False,
                     hoverinfo='skip'
                 ))
     
     fig.update_layout(
-        title='Comparação de Modelos Preditivos',
-        xaxis_title='Data',
-        yaxis_title='Ocorrências',
-        height=500,
+        title={
+            'text': '📊 Comparação de Modelos Preditivos - Previsão 2026',
+            'x': 0.5,
+            'xanchor': 'center',
+            'font': {'size': 20}
+        },
+        xaxis_title='Mês',
+        yaxis_title='Número de Crimes',
+        height=600,
         hovermode='x unified',
-        template='plotly_white'
+        template='plotly_white',
+        # CONFIGURAÇÃO DO EIXO X - MOSTRA TODOS OS MESES
+        xaxis=dict(
+            tickmode='linear',
+            dtick='M1',  # Tick a cada mês
+            tickformat='%Y-%m',  # Formato Ano-Mês
+            tickangle=-45,  # Inclina labels para melhor visualização
+            showgrid=True,
+            gridcolor='lightgray'
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='lightgray'
+        ),
+        legend=dict(
+            orientation='h',
+            yanchor='bottom',
+            y=1.02,
+            xanchor='right',
+            x=1
+        )
     )
     
     return fig
@@ -632,13 +662,18 @@ def main():
         progress_bar.progress(1.0)
         status_text.text("✅ Modelos executados com sucesso!")
         
-        # Cria datas futuras
+        # Cria datas futuras - COMEÇA EM 2026
         ultima_data = datas_hist.iloc[-1]
+        # Se última data é 2025, próxima será 2026
         datas_futuro = pd.date_range(
-            start=ultima_data + timedelta(days=30),
+            start=ultima_data + pd.DateOffset(months=1),
             periods=horizonte,
             freq='MS'
         )
+        
+        # DEBUG - Mostrar datas
+        st.info(f"📅 Última data histórica: {ultima_data.strftime('%Y-%m')}")
+        st.info(f"📅 Previsões de: {datas_futuro[0].strftime('%Y-%m')} até {datas_futuro[-1].strftime('%Y-%m')}")
         
         # Visualizações
         if resultados:
@@ -668,7 +703,14 @@ def main():
             
             # Gráfico comparativo
             st.markdown("## 📊 Comparação de Modelos")
-            fig_comparison = create_comparison_chart(resultados, datas_hist, datas_futuro)
+            
+            # Criar série histórica como pandas Series
+            serie_hist = pd.Series(
+                data=df['valor'].values,
+                index=df['data']
+            )
+            
+            fig_comparison = create_comparison_chart(resultados, serie_hist, datas_futuro)
             st.plotly_chart(fig_comparison, use_container_width=True)
             
             # Tabela de performance
@@ -681,14 +723,20 @@ def main():
             st.markdown("## 📈 Previsões Detalhadas")
             
             df_prev = pd.DataFrame({
-                'Data': datas_futuro.strftime('%Y-%m')
+                'Data': datas_futuro,
+                'Mês': datas_futuro.strftime('%b'),  # Jan, Fev, Mar...
+                'Ano': datas_futuro.year
             })
             
             for nome, resultado in resultados:
                 if resultado and 'forecast' in resultado:
                     df_prev[nome] = np.array(resultado['forecast']).round(0).astype(int)
             
-            st.dataframe(df_prev, use_container_width=True)
+            # Formata a coluna Data para exibição
+            df_prev_display = df_prev.copy()
+            df_prev_display['Data'] = df_prev_display['Data'].dt.strftime('%Y-%m')
+            
+            st.dataframe(df_prev_display, use_container_width=True)
             
             # Download
             csv = df_prev.to_csv(index=False)
