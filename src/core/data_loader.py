@@ -10,9 +10,12 @@ import geopandas as gpd
 from pathlib import Path
 from typing import Optional, List, Dict, Union
 from abc import ABC, abstractmethod
-import streamlit as st
+import logging
 
 from src.config import config
+
+# Logger
+logger = logging.getLogger(__name__)
 
 
 class BaseDataLoader(ABC):
@@ -41,8 +44,7 @@ class CrimeDataLoader(BaseDataLoader):
         super().__init__(cache_enabled)
         self.data_path = self.config.paths.DATA_PROCESSED
     
-    @st.cache_data(ttl=3600, show_spinner=False)
-    def load(_self, filename: Optional[str] = None) -> pd.DataFrame:
+    def load(self, filename: Optional[str] = None) -> pd.DataFrame:
         """
         Carrega dados de criminalidade
         
@@ -51,14 +53,38 @@ class CrimeDataLoader(BaseDataLoader):
             
         Returns:
             DataFrame com dados de criminalidade
+            
+        Raises:
+            FileNotFoundError: Se arquivo especificado não existe
+            ValueError: Se dados carregados estão inválidos
         """
-        if filename:
-            file_path = _self.data_path / filename
-            if file_path.exists():
-                return pd.read_csv(file_path)
-        
-        # Retorna dados simulados se arquivo não existe
-        return _self._generate_sample_data()
+        try:
+            if filename:
+                file_path = self.data_path / filename
+                if file_path.exists():
+                    logger.info(f"Carregando dados de: {file_path}")
+                    df = pd.read_csv(file_path)
+                    if self._validate_data(df):
+                        logger.info(f"Dados carregados com sucesso: {len(df)} linhas")
+                        return df
+                    else:
+                        raise ValueError(f"Dados inválidos em {filename}")
+                else:
+                    logger.warning(f"Arquivo não encontrado: {file_path}")
+            
+            # Retorna dados simulados se arquivo não existe
+            logger.info("Gerando dados simulados")
+            return self._generate_sample_data()
+            
+        except FileNotFoundError as e:
+            logger.error(f"Arquivo não encontrado: {e}")
+            raise
+        except pd.errors.EmptyDataError as e:
+            logger.error(f"Arquivo vazio: {e}")
+            raise ValueError("Arquivo CSV está vazio")
+        except Exception as e:
+            logger.error(f"Erro ao carregar dados: {e}")
+            raise
     
     def _generate_sample_data(self) -> pd.DataFrame:
         """Gera dados de exemplo para demonstração"""
@@ -131,8 +157,7 @@ class GeoDataLoader(BaseDataLoader):
         super().__init__(cache_enabled)
         self.shapefiles_path = self.config.paths.DATA_SHAPEFILES
     
-    @st.cache_data(ttl=3600, show_spinner=False)
-    def load(_self, filename: str = "zonas_rio_limites_reais.geojson") -> Optional[gpd.GeoDataFrame]:
+    def load(self, filename: str = "zonas_rio_limites_reais.geojson") -> Optional[gpd.GeoDataFrame]:
         """
         Carrega dados geoespaciais
         
@@ -141,10 +166,14 @@ class GeoDataLoader(BaseDataLoader):
             
         Returns:
             GeoDataFrame ou None se não encontrar
+            
+        Raises:
+            FileNotFoundError: Se arquivo não encontrado em nenhum caminho
+            ValueError: Se GeoDataFrame está vazio ou inválido
         """
         # Tenta múltiplos caminhos
         possible_paths = [
-            _self.shapefiles_path / filename,
+            self.shapefiles_path / filename,
             Path("data/shapefiles") / filename,
             Path(__file__).parent.parent.parent / "data" / "shapefiles" / filename
         ]
@@ -152,14 +181,24 @@ class GeoDataLoader(BaseDataLoader):
         for path in possible_paths:
             if path.exists():
                 try:
+                    logger.info(f"Tentando carregar GeoJSON: {path}")
                     gdf = gpd.read_file(path)
                     if not gdf.empty:
-                        return _self._process_geodataframe(gdf)
+                        logger.info(f"GeoJSON carregado: {len(gdf)} geometrias")
+                        return self._process_geodataframe(gdf)
+                    else:
+                        logger.warning(f"GeoDataFrame vazio: {path}")
+                except FileNotFoundError:
+                    logger.error(f"Arquivo não encontrado: {path}")
+                    continue
+                except ValueError as e:
+                    logger.error(f"GeoJSON inválido: {e}")
+                    continue
                 except Exception as e:
-                    if _self.config.DEBUG:
-                        st.warning(f"Erro ao carregar {path}: {e}")
+                    logger.error(f"Erro ao carregar GeoJSON: {e}")
                     continue
         
+        logger.error(f"Arquivo {filename} não encontrado em nenhum caminho")
         return None
     
     def _process_geodataframe(self, gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:

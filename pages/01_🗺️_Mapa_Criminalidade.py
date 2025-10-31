@@ -13,9 +13,11 @@ from pathlib import Path
 # Adiciona src ao path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.core import DataManager, MapVisualizer
+from src.core import MapVisualizer
 from src.config import config
+from src.utils.streamlit_cache import get_geo_data
 from streamlit_folium import st_folium
+import logging
 
 # Configuração da página
 st.set_page_config(
@@ -24,16 +26,14 @@ st.set_page_config(
     layout="wide"
 )
 
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+
 st.title("🗺️ Mapa de Criminalidade - Município do Rio de Janeiro")
 st.markdown("### Visualização geográfica dos níveis de criminalidade")
 
-# Instancia gerenciadores
-@st.cache_resource
-def get_managers():
-    """Retorna instâncias dos gerenciadores"""
-    return DataManager(), MapVisualizer()
-
-data_manager, map_visualizer = get_managers()
+# Instancia visualizador
+map_visualizer = MapVisualizer()
 
 # Sidebar com controles
 st.sidebar.header("⚙️ Configurações")
@@ -57,9 +57,9 @@ include_crime_data = st.sidebar.checkbox(
     value=True
 )
 
-# Carrega dados geoespaciais
+# Carrega dados geoespaciais usando wrapper com cache
 with st.spinner("🔄 Carregando dados geográficos..."):
-    gdf = data_manager.get_geo_data(
+    gdf = get_geo_data(
         filename=selected_geojson,
         include_crime_data=include_crime_data
     )
