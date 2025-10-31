@@ -64,8 +64,20 @@ class MapConfig:
                 'max_lon': -43.096837
             }
     
-    def get_color_by_rate(self, rate: float) -> str:
-        """Retorna cor baseada na taxa de criminalidade"""
+    def get_color_by_rate(self, rate: float = None) -> str:
+        """
+        Retorna cor baseada na taxa de criminalidade
+        
+        Args:
+            rate: Taxa de criminalidade por 100k habitantes.
+                  Se None, retorna cor neutra (cinza)
+                  
+        Returns:
+            Código hexadecimal da cor
+        """
+        if rate is None:
+            return '#CCCCCC'  # Cinza para valores ausentes
+        
         if rate < 20:
             return self.COLOR_VERY_LOW
         elif rate < 40:
@@ -98,13 +110,12 @@ class CrimeConfig:
             ]
         
         if self.REGIONS is None:
-            # Apenas município do Rio de Janeiro
+            # Apenas município do Rio de Janeiro - alinhado com GeoJSON disponível
             self.REGIONS = [
                 'Centro',
                 'Zona Sul',
                 'Zona Norte',
-                'Zona Oeste',
-                'Barra da Tijuca'
+                'Zona Oeste'
             ]
 
 

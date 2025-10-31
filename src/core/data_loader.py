@@ -202,37 +202,91 @@ class GeoDataLoader(BaseDataLoader):
         return None
     
     def _process_geodataframe(self, gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-        """Processa GeoDataFrame após carregamento"""
-        # Padroniza nome da coluna de zona
-        if 'nome' in gdf.columns:
-            gdf['zona'] = gdf['nome']
-        elif 'name' in gdf.columns:
-            gdf['zona'] = gdf['name']
+        """
+        Processa GeoDataFrame após carregamento
+        
+        - Filtra apenas município do Rio de Janeiro
+        - Padroniza colunas
+        - Garante CRS correto
+        """
+        # Filtra apenas município do Rio (código IBGE: 3304557)
+        if 'CD_MUN' in gdf.columns:
+            gdf = gdf[gdf['CD_MUN'] == '3304557'].copy()
+            logger.info(f"Filtrado para município do Rio: {len(gdf)} geometrias")
+        elif 'municipio' in gdf.columns:
+            gdf = gdf[gdf['municipio'].str.contains('Rio de Janeiro', case=False, na=False)].copy()
+            logger.info(f"Filtrado para município do Rio: {len(gdf)} geometrias")
+        
+        # Padroniza nome da coluna de zona SOMENTE se não existir
+        if 'zona' not in gdf.columns:
+            if 'nome' in gdf.columns:
+                gdf['zona'] = gdf['nome']
+                logger.info("Coluna 'zona' criada a partir de 'nome'")
+            elif 'name' in gdf.columns:
+                gdf['zona'] = gdf['name']
+                logger.info("Coluna 'zona' criada a partir de 'name'")
+        else:
+            logger.info("Coluna 'zona' já existe, mantendo original")
         
         # Garante CRS correto (WGS84)
         if gdf.crs is None:
             gdf.set_crs('EPSG:4326', inplace=True)
+            logger.info("CRS definido como EPSG:4326")
         elif gdf.crs != 'EPSG:4326':
             gdf.to_crs('EPSG:4326', inplace=True)
+            logger.info(f"CRS convertido para EPSG:4326")
         
         return gdf
     
     def merge_with_crime_data(self, gdf: gpd.GeoDataFrame, 
-                              crime_df: pd.DataFrame) -> gpd.GeoDataFrame:
-        """Faz merge de dados geoespaciais com dados de criminalidade"""
+                              crime_df: pd.DataFrame,
+                              geometry_key: str = 'zona',
+                              crime_key: str = 'regiao_administrativa') -> gpd.GeoDataFrame:
+        """
+        Faz merge de dados geoespaciais com dados de criminalidade
+        
+        Args:
+            gdf: GeoDataFrame com geometrias
+            crime_df: DataFrame com dados de crime
+            geometry_key: Coluna do GeoDataFrame para junção (padrão: 'zona')
+            crime_key: Coluna do crime_df para junção (padrão: 'regiao_administrativa')
+            
+        Returns:
+            GeoDataFrame com dados de crime mesclados
+        """
+        # Verifica se a coluna existe no GeoDataFrame
+        if geometry_key not in gdf.columns:
+            logger.warning(f"Coluna '{geometry_key}' não encontrada no GeoDataFrame. Colunas disponíveis: {gdf.columns.tolist()}")
+            # Tenta usar primeira coluna com nome
+            for col in ['nome', 'name', 'NOME']:
+                if col in gdf.columns:
+                    geometry_key = col
+                    logger.info(f"Usando coluna '{geometry_key}' para merge")
+                    break
+        
         # Agrega dados de crime por região
-        crime_agg = crime_df.groupby('regiao_administrativa').agg({
+        crime_agg = crime_df.groupby(crime_key).agg({
             'total_ocorrencias': 'sum',
             'taxa_100k': 'mean'
         }).reset_index()
         
+        logger.info(f"Regiões nos dados de crime: {crime_agg[crime_key].unique().tolist()}")
+        logger.info(f"Regiões no GeoDataFrame: {gdf[geometry_key].unique().tolist()}")
+        
         # Merge
         gdf_merged = gdf.merge(
             crime_agg,
-            left_on='zona',
-            right_on='regiao_administrativa',
+            left_on=geometry_key,
+            right_on=crime_key,
             how='left'
         )
+        
+        # Log de áreas sem dados
+        missing_data = gdf_merged['taxa_100k'].isna().sum()
+        if missing_data > 0:
+            logger.warning(f"{missing_data} geometrias sem dados de criminalidade após merge")
+            missing_areas = gdf_merged[gdf_merged['taxa_100k'].isna()][geometry_key].tolist()
+            logger.warning(f"Áreas sem dados: {missing_areas}")
         
         return gdf_merged
 

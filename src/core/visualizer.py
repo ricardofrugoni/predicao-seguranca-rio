@@ -249,8 +249,8 @@ class MapVisualizer(BaseVisualizer):
         folium.GeoJson(
             gdf,
             style_function=lambda feature: {
-                'fillColor': self._get_color(
-                    feature['properties'].get(value_column, 50)
+                'fillColor': self._get_color_safe(
+                    feature['properties'].get(value_column)
                 ),
                 'fillOpacity': self.config.maps.FILL_OPACITY,
                 'color': self.config.maps.LINE_COLOR,
@@ -258,16 +258,30 @@ class MapVisualizer(BaseVisualizer):
                 'dashArray': '0'
             },
             tooltip=folium.GeoJsonTooltip(
-                fields=[name_column, value_column],
-                aliases=['Região:', 'Taxa/100k hab:'],
+                fields=[name_column, value_column] if value_column in gdf.columns else [name_column],
+                aliases=['Região:', 'Taxa/100k hab:'] if value_column in gdf.columns else ['Região:'],
                 sticky=True
             )
         ).add_to(m)
         
         return m
     
-    def _get_color(self, value: float) -> str:
-        """Retorna cor baseada no valor"""
+    def _get_color_safe(self, value: float = None) -> str:
+        """
+        Retorna cor baseada no valor, tratando valores ausentes
+        
+        Args:
+            value: Taxa de criminalidade. Se None ou NaN, retorna cinza
+            
+        Returns:
+            Código hexadecimal da cor
+        """
+        import math
+        
+        # Trata valores ausentes (None ou NaN)
+        if value is None or (isinstance(value, float) and math.isnan(value)):
+            return self.config.maps.get_color_by_rate(None)
+        
         return self.config.maps.get_color_by_rate(value)
     
     def _create_empty_map(self) -> folium.Map:
